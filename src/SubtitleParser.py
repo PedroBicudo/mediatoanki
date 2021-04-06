@@ -12,7 +12,7 @@ class SubtitleParser:
     def get_subtitles_from_file(self, filename) -> List[Subtitle]:
         file_format = SubtitleParser._get_file_format(filename).lower()
         subtitle_regex = self._get_regex_based_on_file_format(file_format)
-        file = open(filename, "r")
+        file = self._get_subtitle_file(filename)
         subs = []
         for line in file.readlines():
             match = re.match(subtitle_regex.REGEX_LINE, line)
@@ -30,6 +30,17 @@ class SubtitleParser:
                 subs[-1].text += f"{line.strip()} "
 
         return subs
+
+    def _get_subtitle_file(self, filename):
+        try:
+            return self._open_file_on_reading_mode(filename)
+
+        except Exception as error:
+            raise Exception("Não foi possível abrir o arquivo de legendas.")
+
+
+    def _open_file_on_reading_mode(self, filename):
+        return open(filename, 'r')
 
     @staticmethod
     def _get_timedelta_from(time: str) -> timedelta:
