@@ -64,4 +64,4 @@ class SubtitleParser:
 
     @staticmethod
     def _get_file_format(filename):
-        return pathlib.Path(filename).suffix
+        return pathlib.Path(filename).suffix.split(".")[-1]
