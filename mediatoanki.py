@@ -39,8 +39,3 @@ parser.add_argument(
 args = parser.parse_args()
 media_to_anki = MediaToAnkiArgParser(args)
 media_to_anki.run()
-
-# TODO - Adicionar uma classe que vai organizar escrever os arquivos em outro diretório.
-# TODO - Adicionar um argparse
-# TODO - Adicionar um modo verboso
-# TODO - Criar uma classe que vai lidar com a atualizacao padding
