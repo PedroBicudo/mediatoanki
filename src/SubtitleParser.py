@@ -55,12 +55,19 @@ class SubtitleParser:
     def _has_hour_field(time: str):
         return time.count(":") == 2
 
-    @staticmethod
-    def _get_regex_based_on_file_format(file_format) -> SubtitleFormat:
-        return {
-            "vtt": Vtt
+    def _get_regex_based_on_file_format(self, file_format) -> SubtitleFormat:
+        try:
+            return self._get_subtitle_regex(file_format)
+        except Exception as _:
+            raise NotImplementedError(f"O formato '{file_format}' não está disponível")
 
-        }.get(file_format, Vtt)
+    @staticmethod
+    def _get_subtitle_regex(file_format) -> SubtitleFormat:
+        subs_regex = {
+            "vtt": Vtt
+        }
+        return subs_regex[file_format]
+
 
     @staticmethod
     def _get_file_format(filename):
