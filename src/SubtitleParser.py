@@ -11,7 +11,7 @@ class SubtitleParser:
 
     def get_subtitles_from_file(self, filename) -> List[Subtitle]:
         file_format = SubtitleParser._get_file_format(filename).lower()
-        subtitle_regex = SubtitleParser._get_regex_based_on_file_format(file_format)
+        subtitle_regex = self._get_regex_based_on_file_format(file_format)
         file = open(filename, "r")
         subs = []
         for line in file.readlines():
@@ -57,7 +57,7 @@ class SubtitleParser:
 
     def _get_regex_based_on_file_format(self, file_format) -> SubtitleFormat:
         try:
-            return self._get_subtitle_regex(file_format)
+            return SubtitleParser._get_subtitle_regex(file_format)
         except Exception as _:
             raise NotImplementedError(f"O formato '{file_format}' não está disponível")
 
@@ -67,7 +67,6 @@ class SubtitleParser:
             "vtt": Vtt
         }
         return subs_regex[file_format]
-
 
     @staticmethod
     def _get_file_format(filename):
