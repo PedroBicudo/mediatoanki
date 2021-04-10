@@ -5,6 +5,7 @@ from src.AnkiDeckGenerator import AnkiDeckGenerator
 from src.SubtitleAudioCutter import SubtitleAudioCutter
 from src.SubtitleFrameExtractor import SubtitleFrameExtractor
 from src.SubtitleParser import SubtitleParser
+from src.model.Subtitle import Subtitle
 from src.model.file.Video import Video
 
 
@@ -62,10 +63,10 @@ class MediaToAnkiArgParser:
             self._write_frame_from_subtitle_into_media_dir(subtitle)
             self._write_audio_from_subtitle_into_media_dir(subtitle)
 
-    def _write_frame_from_subtitle_into_media_dir(self, subtitle):
+    def _write_frame_from_subtitle_into_media_dir(self, subtitle: Subtitle):
         subtitle.frame.write_at(f"{subtitle.subtitle_id}", self._deck_media_dir)
 
-    def _write_audio_from_subtitle_into_media_dir(self, subtitle):
+    def _write_audio_from_subtitle_into_media_dir(self, subtitle: Subtitle):
         subtitle.audio.write_at(f"{subtitle.subtitle_id}", self._deck_media_dir)
 
     def _update_pad_from_subs(self):
@@ -86,7 +87,7 @@ class MediaToAnkiArgParser:
         self._padend = args.padend
 
     @staticmethod
-    def _is_required_arguments_valid(args: Namespace):
+    def _is_required_arguments_valid(args: Namespace) -> bool:
         return (
             MediaToAnkiArgParser._is_destination_valid(args.destination) and
             MediaToAnkiArgParser._is_video_valid(args.video_source) and
@@ -94,17 +95,17 @@ class MediaToAnkiArgParser:
         )
 
     @staticmethod
-    def _is_destination_valid(destination: str):
+    def _is_destination_valid(destination: str) -> bool:
         return os.path.exists(destination) and os.path.isdir(destination)
 
     @staticmethod
-    def _is_video_valid(video_path: str):
+    def _is_video_valid(video_path: str) -> bool:
         return MediaToAnkiArgParser._is_file_valid(video_path)
 
     @staticmethod
-    def _is_subtitle_valid(subtitle_path):
+    def _is_subtitle_valid(subtitle_path: str) -> bool:
         return MediaToAnkiArgParser._is_file_valid(subtitle_path)
 
     @staticmethod
-    def _is_file_valid(filepath):
+    def _is_file_valid(filepath: str) -> bool:
         return os.path.exists(filepath) and os.path.isfile(filepath)

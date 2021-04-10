@@ -14,7 +14,7 @@ class Subtitle:
     def __init__(self, time_start: timedelta, time_end: timedelta):
         self._validate_time_range(time_start, time_end)
 
-    def _validate_time_range(self, time_start, time_end):
+    def _validate_time_range(self, time_start: timedelta, time_end: timedelta):
         if not TimeUtils.is_time_range_valid(time_start.total_seconds(), time_end.total_seconds()):
             raise ValueError("time range (seconds_start -> seconds_stop) invalid.")
 

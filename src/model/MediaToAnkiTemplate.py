@@ -1,3 +1,5 @@
+from typing import List, Dict
+
 import genanki
 
 
@@ -12,11 +14,11 @@ class MediaToAnkiTemplate:
         )
 
     @property
-    def model(self):
+    def model(self) -> genanki.Model:
         return self._model
 
     @staticmethod
-    def _get_fields():
+    def _get_fields() -> List[Dict[str, str]]:
         return [
             {'name': 'ID'},
             {'name': 'SOUND'},
@@ -29,7 +31,7 @@ class MediaToAnkiTemplate:
         ]
 
     @staticmethod
-    def _get_templates():
+    def _get_templates() -> List[Dict[str, str]]:
         return [
             {
                 "name": "mediatoankidefault",
@@ -51,7 +53,7 @@ class MediaToAnkiTemplate:
         ]
 
     @staticmethod
-    def _get_css():
+    def _get_css() -> str:
         return (
             ".card {font-family: arial;font-size:20px;text-align:center;color:black;background-color:white;}"
             "div.snapshot {display: inline-block;width: 500px;height: auto;}"
