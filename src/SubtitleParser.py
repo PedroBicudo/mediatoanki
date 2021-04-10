@@ -38,7 +38,6 @@ class SubtitleParser:
         except Exception as error:
             raise Exception("Não foi possível abrir o arquivo de legendas.")
 
-
     def _open_file_on_reading_mode(self, filename):
         return open(filename, 'r')
 
