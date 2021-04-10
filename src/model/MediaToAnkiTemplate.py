@@ -18,7 +18,7 @@ class MediaToAnkiTemplate:
         return self._model
 
     @staticmethod
-    def _get_fields() -> List[Dict[str]]:
+    def _get_fields() -> List[Dict[str, str]]:
         return [
             {'name': 'ID'},
             {'name': 'SOUND'},
@@ -31,7 +31,7 @@ class MediaToAnkiTemplate:
         ]
 
     @staticmethod
-    def _get_templates() -> List[Dict[str]]:
+    def _get_templates() -> List[Dict[str, str]]:
         return [
             {
                 "name": "mediatoankidefault",
