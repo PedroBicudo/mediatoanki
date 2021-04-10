@@ -103,9 +103,9 @@ class MediaToAnkiArgParser:
         return MediaToAnkiArgParser._is_file_valid(video_path)
 
     @staticmethod
-    def _is_subtitle_valid(subtitle_path) -> bool:
+    def _is_subtitle_valid(subtitle_path: str) -> bool:
         return MediaToAnkiArgParser._is_file_valid(subtitle_path)
 
     @staticmethod
-    def _is_file_valid(filepath) -> bool:
+    def _is_file_valid(filepath: str) -> bool:
         return os.path.exists(filepath) and os.path.isfile(filepath)
