@@ -11,14 +11,14 @@ class AnkiDeckGenerator:
         self._set_destination(destination)
         self._deck_name = deck_name
 
-    def _set_destination(self, destination):
+    def _set_destination(self, destination: str):
         if not AnkiDeckGenerator._is_destination_valid(destination):
             raise
 
         self.__destination = destination
 
     @staticmethod
-    def _is_destination_valid(destination):
+    def _is_destination_valid(destination: str) -> bool:
         return os.path.exists(destination) and os.path.isdir(destination)
 
     def generate_deck_based_on(self, subtitles: List[Subtitle]):
@@ -33,7 +33,7 @@ class AnkiDeckGenerator:
         genanki.Package(deck).write_to_file(path)
 
     @staticmethod
-    def _get_fields_from_sub(subtitle) -> List[str]:
+    def _get_fields_from_sub(subtitle: Subtitle) -> List[str]:
         return [
             f"{subtitle.subtitle_id}",
             f"[sound:{subtitle.subtitle_id}.mp3]",
@@ -43,5 +43,5 @@ class AnkiDeckGenerator:
         ]
 
     @staticmethod
-    def _get_random_deck_id():
+    def _get_random_deck_id() -> int:
         return random.randrange(1 << 30, 1 << 31)
