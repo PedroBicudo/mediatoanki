@@ -8,7 +8,7 @@ class TimeUtils:
         self._time_end = time_end
 
     @staticmethod
-    def is_time_range_valid(time_start: int, time_end: int) -> bool:
+    def is_time_range_valid(time_start: float, time_end: float) -> bool:
         return time_start <= time_end
 
     def is_pad_start_invalid_with(self, seconds_added: timedelta) -> bool:
