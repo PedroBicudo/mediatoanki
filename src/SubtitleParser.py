@@ -1,7 +1,8 @@
 import pathlib
 import re
 from datetime import timedelta
-from typing import List
+from typing import List, TextIO
+
 from src.model.Subtitle import Subtitle
 from src.model.subtitle_formats.SubtitleFormat import SubtitleFormat
 from src.model.subtitle_formats.Vtt import Vtt
@@ -9,7 +10,7 @@ from src.model.subtitle_formats.Vtt import Vtt
 
 class SubtitleParser:
 
-    def get_subtitles_from_file(self, filename) -> List[Subtitle]:
+    def get_subtitles_from_file(self, filename: str) -> List[Subtitle]:
         file_format = SubtitleParser._get_file_format(filename).lower()
         subtitle_regex = self._get_regex_based_on_file_format(file_format)
         file = self._get_subtitle_file(filename)
@@ -31,14 +32,14 @@ class SubtitleParser:
 
         return subs
 
-    def _get_subtitle_file(self, filename):
+    def _get_subtitle_file(self, filename: str) -> TextIO:
         try:
             return self._open_file_on_reading_mode(filename)
 
         except Exception as error:
             raise Exception("Não foi possível abrir o arquivo de legendas.")
 
-    def _open_file_on_reading_mode(self, filename):
+    def _open_file_on_reading_mode(self, filename: str) -> TextIO:
         return open(filename, 'r')
 
     @staticmethod
@@ -62,22 +63,22 @@ class SubtitleParser:
             )
 
     @staticmethod
-    def _has_hour_field(time: str):
+    def _has_hour_field(time: str) -> bool:
         return time.count(":") == 2
 
-    def _get_regex_based_on_file_format(self, file_format) -> SubtitleFormat:
+    def _get_regex_based_on_file_format(self, file_format: str) -> SubtitleFormat:
         try:
             return SubtitleParser._get_subtitle_regex(file_format)
         except Exception as _:
             raise NotImplementedError(f"O formato '{file_format}' não está disponível")
 
     @staticmethod
-    def _get_subtitle_regex(file_format) -> SubtitleFormat:
+    def _get_subtitle_regex(file_format: str) -> SubtitleFormat:
         subs_regex = {
             "vtt": Vtt
         }
         return subs_regex[file_format]
 
     @staticmethod
-    def _get_file_format(filename):
+    def _get_file_format(filename: str) -> str:
         return pathlib.Path(filename).suffix.split(".")[-1]
