@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from src.model.file.Audio import Audio
 from src.model.file.Frame import Frame
@@ -13,6 +13,8 @@ class Subtitle:
 
     def __init__(self, time_start: timedelta, time_end: timedelta):
         self._validate_time_range(time_start, time_end)
+        self._scene_id = f"{self._time_start.total_seconds()}{self._time_end.total_seconds()}"
+        self._datetime_id = datetime.now().strftime("%d%m%Y%H%M%S")
 
     def _validate_time_range(self, time_start: timedelta, time_end: timedelta):
         if not TimeUtils.is_time_range_valid(time_start.total_seconds(), time_end.total_seconds()):
@@ -55,7 +57,7 @@ class Subtitle:
 
     @property
     def subtitle_id(self):
-        return f"{self._time_start.total_seconds()}_{self._time_end.total_seconds()}"
+        return f"{self._datetime_id}_{self._scene_id}"
 
     def add_pad_start(self, seconds: int):
         seconds_added = timedelta(seconds=seconds)
