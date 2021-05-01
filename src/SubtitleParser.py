@@ -1,7 +1,7 @@
 import pathlib
 import re
 from datetime import timedelta
-from typing import List, TextIO
+from typing import List
 
 from src.model.Subtitle import Subtitle
 from src.model.subtitle_formats.SubtitleFormat import SubtitleFormat
@@ -13,9 +13,9 @@ class SubtitleParser:
     def get_subtitles_from_file(self, filename: str) -> List[Subtitle]:
         file_format = SubtitleParser._get_file_format(filename).lower()
         subtitle_regex = self._get_regex_based_on_file_format(file_format)
-        file = self._get_subtitle_file(filename)
+        file_lines = self._get_subtitle_file_lines(filename)
         subs = []
-        for line in file.readlines():
+        for line in file_lines:
             match = re.match(subtitle_regex.REGEX_LINE, line)
             if match:
                 time_start = SubtitleParser._get_timedelta_from(
@@ -32,15 +32,18 @@ class SubtitleParser:
 
         return subs
 
-    def _get_subtitle_file(self, filename: str) -> TextIO:
+    def _get_subtitle_file_lines(self, filename: str) -> List[str]:
         try:
-            return self._open_file_on_reading_mode(filename)
+            return self._get_file_lines(filename)
 
         except Exception as error:
             raise Exception("Não foi possível abrir o arquivo de legendas.")
 
-    def _open_file_on_reading_mode(self, filename: str) -> TextIO:
-        return open(filename, 'r')
+    def _get_file_lines(self, filename: str) -> List[str]:
+        file = open(filename, 'r')
+        lines = list(file)
+        file.close()
+        return lines
 
     @staticmethod
     def _get_timedelta_from(time: str) -> timedelta:
