@@ -1,10 +1,9 @@
 # Media to anki (python3+)
 É um conjunto de scripts que gera um deck anki a partir de algum vídeo com legendas.
 
-## Requisitos
+## Instalando requisitos
 ```
-moviepy
-genanki
+pip install -r requirements.txt
 ```
 
 ## Sintaxe
