@@ -34,12 +34,12 @@ class SubtitleParser:
 
     def _get_subtitle_file_lines(self, filename: str) -> List[str]:
         try:
-            return self._get_file_lines(filename)
+            return self._get_lines_from_file(filename)
 
         except Exception as error:
             raise Exception("Não foi possível abrir o arquivo de legendas.")
 
-    def _get_file_lines(self, filename: str) -> List[str]:
+    def _get_lines_from_file(self, filename: str) -> List[str]:
         file = open(filename, 'r')
         lines = list(file)
         file.close()
