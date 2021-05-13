@@ -14,23 +14,46 @@ class SubtitleParser:
         file_format = SubtitleParser._get_file_format(filename).lower()
         subtitle_regex = self._get_regex_based_on_file_format(file_format)
         file_lines = self._get_subtitle_file_lines(filename)
-        subs = []
-        for line in file_lines:
-            match = re.match(subtitle_regex.REGEX_LINE, line)
-            if match:
-                time_start = SubtitleParser._get_timedelta_from(
-                    re.match(subtitle_regex.REGEX_TIME_START, line).group(0)
-                )
-                time_end = SubtitleParser._get_timedelta_from(
-                    re.search(subtitle_regex.REGEX_TIME_END, line).group(0)
-                )
-                subs.append(Subtitle(time_start, time_end))
-                continue
+        subtitles = []
+        while self._is_not_empty(file_lines):
+            current_line = file_lines.pop(0)
+            if self._is_time_from_scene(current_line, subtitle_regex):
+                current_subtitle = self._get_subtitle_with_times_defined(current_line, subtitle_regex)
+                current_subtitle.text = self._get_text_from_scene(file_lines)
+                subtitles.append(current_subtitle)
 
-            if len(subs) > 0:
-                subs[-1].text += f"{line.strip()} "
+        return subtitles
 
-        return subs
+    @staticmethod
+    def _is_time_from_scene(text: str, subtitle_regex: SubtitleFormat) -> re:
+        return re.match(subtitle_regex.REGEX_LINE, text)
+
+    @staticmethod
+    def _get_subtitle_with_times_defined(line_time: str, subtitle_regex: SubtitleFormat):
+        time_start = SubtitleParser._get_timedelta_from(
+            re.match(subtitle_regex.REGEX_TIME_START, line_time).group(0)
+        )
+        time_end = SubtitleParser._get_timedelta_from(
+            re.search(subtitle_regex.REGEX_TIME_END, line_time).group(0)
+        )
+
+        return Subtitle(time_start, time_end)
+
+    def _get_text_from_scene(self, file_lines: List[str]) -> str:
+        text_after_time = file_lines.pop(0)
+        text_scene = ""
+        while self._is_not_empty(file_lines) and self._is_not_blank_line(text_after_time):
+            text_scene += f" {text_after_time.strip()}"
+            text_after_time = file_lines.pop(0)
+
+        return text_scene
+
+    def _is_not_blank_line(self, text: str):
+        return self._is_not_empty(text.strip())
+
+    @staticmethod
+    def _is_not_empty(content: [List, str]):
+        return len(content) > 0
 
     def _get_subtitle_file_lines(self, filename: str) -> List[str]:
         try:
