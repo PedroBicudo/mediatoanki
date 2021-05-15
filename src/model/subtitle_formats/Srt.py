@@ -7,3 +7,4 @@ class Srt(SubtitleFormat):
     )
     REGEX_TIME_START: str = r"^\d{2}:\d{2}:\d{2}(,\d{3}|)"
     REGEX_TIME_END: str = r"\d{2}:\d{2}:\d{2}(,\d{3}|)$"
+    MILLISECONDS_DELIMITER = ","
