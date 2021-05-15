@@ -31,10 +31,12 @@ class SubtitleParser:
     @staticmethod
     def _get_subtitle_with_times_defined(line_time: str, subtitle_regex: SubtitleFormat):
         time_start = SubtitleParser._get_timedelta_from(
-            re.match(subtitle_regex.REGEX_TIME_START, line_time).group(0)
+            re.match(subtitle_regex.REGEX_TIME_START, line_time).group(0),
+            subtitle_regex
         )
         time_end = SubtitleParser._get_timedelta_from(
-            re.search(subtitle_regex.REGEX_TIME_END, line_time).group(0)
+            re.search(subtitle_regex.REGEX_TIME_END, line_time).group(0),
+            subtitle_regex
         )
 
         return Subtitle(time_start, time_end)
@@ -69,8 +71,8 @@ class SubtitleParser:
         return lines
 
     @staticmethod
-    def _get_timedelta_from(time: str) -> timedelta:
-        hours, miliseconds = time.split('.')
+    def _get_timedelta_from(time: str, subtitle_regex: SubtitleFormat) -> timedelta:
+        hours, miliseconds = time.split(subtitle_regex.MILLISECONDS_DELIMITER)
         if SubtitleParser._has_hour_field(time):
             hour, minute, second = hours.split(":")
             return timedelta(
