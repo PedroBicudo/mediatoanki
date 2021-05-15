@@ -4,6 +4,7 @@ from datetime import timedelta
 from typing import List
 
 from src.model.Subtitle import Subtitle
+from src.model.subtitle_formats.Srt import Srt
 from src.model.subtitle_formats.SubtitleFormat import SubtitleFormat
 from src.model.subtitle_formats.Vtt import Vtt
 
@@ -103,7 +104,8 @@ class SubtitleParser:
     @staticmethod
     def _get_subtitle_regex(file_format: str) -> SubtitleFormat:
         subs_regex = {
-            "vtt": Vtt
+            "vtt": Vtt,
+            "srt": Srt
         }
         return subs_regex[file_format]
 
