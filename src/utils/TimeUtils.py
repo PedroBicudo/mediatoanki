@@ -9,7 +9,11 @@ class TimeUtils:
 
     @staticmethod
     def is_time_range_valid(time_start: float, time_end: float) -> bool:
-        return time_start <= time_end
+        return (
+                time_start <= time_end and
+                TimeUtils._is_time_positive(time_start) and
+                TimeUtils._is_time_positive(time_end)
+        )
 
     def is_pad_start_invalid_with(self, seconds_added: timedelta) -> bool:
         return (
@@ -31,3 +35,7 @@ class TimeUtils:
 
     def is_pad_negative_with(self, seconds_added: timedelta) -> bool:
         return self._time_start + seconds_added < timedelta(seconds=0)
+
+    @staticmethod
+    def _is_time_positive(time: float):
+        return time >= 0.0
