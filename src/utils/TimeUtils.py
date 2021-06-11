@@ -44,9 +44,6 @@ class TimeUtils:
     def _is_timedelta_negative_with(time: timedelta, seconds_added: timedelta):
         return time + seconds_added < timedelta(seconds=0)
 
-    def is_pad_negative_with(self, seconds_added: timedelta) -> bool:
-        return self._time_start + seconds_added < timedelta(seconds=0)
-
     @staticmethod
     def _is_time_positive(time: float):
         return time >= 0.0
