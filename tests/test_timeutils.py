@@ -54,6 +54,16 @@ class MyTestCase(unittest.TestCase):
         result = self.timeutil.is_pad_start_invalid_with(seconds_added)
         self.assertEqual(result, True, msg=f"Teste: -10 horas adicionadas ao time_start")
 
+    def test_is_time_end_less_than_time_start_with_pad(self):
+        seconds_added = timedelta(hours=-10)
+        result = self.timeutil.is_pad_end_invalid_with(seconds_added)
+        self.assertEqual(result, True, msg="Teste: time_end < time_start")
+
+    def test_is_time_end_negative(self):
+        seconds_added = timedelta(hours=-10)
+        result = self.timeutil.is_pad_end_invalid_with(seconds_added)
+        self.assertEqual(result, True, msg="Teste: -10 horas adicionadas ao time_end")
+
 
 if __name__ == '__main__':
     unittest.main()
