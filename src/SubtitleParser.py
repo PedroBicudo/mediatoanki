@@ -31,11 +31,11 @@ class SubtitleParser:
 
     @staticmethod
     def _get_subtitle_with_times_defined(line_time: str, subtitle_regex: SubtitleFormat):
-        time_start = SubtitleParser._get_timedelta_from(
+        time_start = SubtitleParser.convert_time_text_to_timedelta(
             re.match(subtitle_regex.REGEX_TIME_START, line_time).group(0),
             subtitle_regex
         )
-        time_end = SubtitleParser._get_timedelta_from(
+        time_end = SubtitleParser.convert_time_text_to_timedelta(
             re.search(subtitle_regex.REGEX_TIME_END, line_time).group(0),
             subtitle_regex
         )
@@ -43,13 +43,16 @@ class SubtitleParser:
         return Subtitle(time_start, time_end)
 
     def _get_text_from_scene(self, file_lines: List[str]) -> str:
-        text_after_time = file_lines.pop(0)
-        text_scene = ""
-        while self._is_not_empty(file_lines) and self._is_not_blank_line(text_after_time):
-            text_scene += f" {text_after_time.strip()}"
-            text_after_time = file_lines.pop(0)
+        if not self._is_not_empty(file_lines):
+            return ""
 
-        return text_scene
+        text_scene = file_lines.pop(0).strip()
+        text_after_time = text_scene
+        while self._is_not_empty(file_lines) and self._is_not_blank_line(text_after_time):
+            text_after_time = file_lines.pop(0).strip()
+            text_scene += f" {text_after_time}"
+
+        return text_scene.strip()
 
     def _is_not_blank_line(self, text: str):
         return self._is_not_empty(text.strip())
@@ -72,34 +75,67 @@ class SubtitleParser:
         return lines
 
     @staticmethod
-    def _get_timedelta_from(time: str, subtitle_regex: SubtitleFormat) -> timedelta:
-        hours, miliseconds = time.split(subtitle_regex.MILLISECONDS_DELIMITER)
-        if SubtitleParser._has_hour_field(time):
+    def convert_time_text_to_timedelta(time: str, subtitle_regex: SubtitleFormat) -> timedelta:
+        time_list = SubtitleParser._get_default_time_list()
+        time_split = SubtitleParser._get_hours_milliseconds_splitted(time, subtitle_regex)
+        SubtitleParser._update_hours(time_list, *time_split)
+        return SubtitleParser._convert_time_list_to_timedelta(time_list)
+
+    @staticmethod
+    def _get_hours_milliseconds_splitted(time: str, subtitle_regex: SubtitleFormat):
+        return time.split(subtitle_regex.MILLISECONDS_DELIMITER)
+    
+    @staticmethod
+    def _get_default_time_list():
+        return [
+            0.0, # hour
+            0.0, # minute
+            0.0, # second
+            0.0  # milliseconds
+        ]
+    
+    @staticmethod
+    def _update_hours(time_list: dict, hours: str, milliseconds: str = None):
+        SubtitleParser._update_milliseconds_in_time_list(time_list, milliseconds)
+        SubtitleParser._update_hours_in_time_list(time_list, hours)
+
+    @staticmethod
+    def _update_milliseconds_in_time_list(time_list: dict, milliseconds: str):
+        if milliseconds is not None:
+            time_list[3] = float(milliseconds)
+
+    @staticmethod
+    def _update_hours_in_time_list(time_list: dict, hours: str):
+        if SubtitleParser._has_hour_field(hours):
             hour, minute, second = hours.split(":")
-            return timedelta(
-                hours=float(hour),
-                minutes=float(minute),
-                seconds=float(second),
-                milliseconds=float(miliseconds)
-            )
+            time_list[0] = float(hour)
+            time_list[1] = float(minute)
+            time_list[2] = float(second)
 
         else:
             minute, second = hours.split(":")
-            return timedelta(
-                minutes=float(minute),
-                seconds=float(second),
-                milliseconds=float(miliseconds)
-            )
+            time_list[1] = float(minute)
+            time_list[2] = float(second)
+
+    @staticmethod
+    def _convert_time_list_to_timedelta(time_list: dict) -> timedelta:
+        return timedelta(
+                hours=time_list[0],
+                minutes=time_list[1],
+                seconds=time_list[2],
+                milliseconds=time_list[3]
+        )
 
     @staticmethod
     def _has_hour_field(time: str) -> bool:
         return time.count(":") == 2
 
     def _get_regex_based_on_file_format(self, file_format: str) -> SubtitleFormat:
-        try:
-            return SubtitleParser._get_subtitle_regex(file_format)
-        except Exception as _:
-            raise NotImplementedError(f"O formato '{file_format}' não está disponível")
+        sub_format = SubtitleParser._get_subtitle_regex(file_format)
+        if (sub_format != None):
+            return sub_format
+        
+        raise NotImplementedError(f"O formato '{file_format}' não está disponível")
 
     @staticmethod
     def _get_subtitle_regex(file_format: str) -> SubtitleFormat:
@@ -107,7 +143,8 @@ class SubtitleParser:
             "vtt": Vtt,
             "srt": Srt
         }
-        return subs_regex[file_format]
+
+        return subs_regex.get(file_format, None)
 
     @staticmethod
     def _get_file_format(filename: str) -> str:
