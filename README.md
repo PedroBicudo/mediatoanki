@@ -1,5 +1,7 @@
-# Media to anki (python3+)
-É um conjunto de scripts que gera um deck anki a partir de algum vídeo com legendas.
+<div align="center">
+  <h2>Media to Anki</h2>
+  <p>Cria decks para o anki a partir de vídeo e legenda.</p>
+</div>
 
 ## Instalando requisitos
 ```shell
