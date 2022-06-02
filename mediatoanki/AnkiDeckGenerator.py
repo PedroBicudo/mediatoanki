@@ -2,8 +2,8 @@ import os
 import random
 from typing import List
 import genanki
-from src.model.MediaToAnkiTemplate import MediaToAnkiTemplate
-from src.model.Subtitle import Subtitle
+from mediatoanki.model.MediaToAnkiTemplate import MediaToAnkiTemplate
+from mediatoanki.model.Subtitle import Subtitle
 
 
 class AnkiDeckGenerator:

@@ -1,8 +1,8 @@
 import unittest
 from datetime import timedelta
 
-from src.model.Subtitle import Subtitle
-from src.utils.CopyUtils import copy_subtitle, deep_copy_of_subs
+from mediatoanki.model.Subtitle import Subtitle
+from mediatoanki.utils.CopyUtils import copy_subtitle, deep_copy_of_subs
 
 
 class CopyUtilsTestCase(unittest.TestCase):

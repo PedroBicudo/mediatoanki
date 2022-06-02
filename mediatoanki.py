@@ -1,6 +1,6 @@
 import argparse
 
-from src.MediaToAnkiArgParser import MediaToAnkiArgParser
+from mediatoanki.MediaToAnkiArgParser import MediaToAnkiArgParser
 
 parser = argparse.ArgumentParser(description="Create an anki deck given media and subtitles.")
 
@@ -36,6 +36,12 @@ parser.add_argument(
     help="Destination for files."
 )
 
-args = parser.parse_args()
-media_to_anki = MediaToAnkiArgParser(args)
-media_to_anki.run()
+
+def main():
+    args = parser.parse_args()
+    media_to_anki = MediaToAnkiArgParser(args)
+    media_to_anki.run()
+
+
+if __name__ == "__main__":
+    main()

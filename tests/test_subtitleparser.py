@@ -1,8 +1,8 @@
 from datetime import timedelta
 from re import sub
-from src.model.subtitle_formats.Vtt import Vtt
-from src.model.subtitle_formats.Srt import Srt
-from src.SubtitleParser import SubtitleParser
+from mediatoanki.model.subtitle_formats.Vtt import Vtt
+from mediatoanki.model.subtitle_formats.Srt import Srt
+from mediatoanki.SubtitleParser import SubtitleParser
 import unittest
 
 class SubtitleParserTestCase(unittest.TestCase):

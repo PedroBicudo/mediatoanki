@@ -1,9 +1,9 @@
 from typing import List
 
-from src.model.Subtitle import Subtitle
-from src.model.file.Frame import Frame
-from src.model.file.Video import Video
-from src.utils.CopyUtils import deep_copy_of_subs
+from mediatoanki.model.Subtitle import Subtitle
+from mediatoanki.model.file.Frame import Frame
+from mediatoanki.model.file.Video import Video
+from mediatoanki.utils.CopyUtils import deep_copy_of_subs
 
 
 class SubtitleFrameExtractor:

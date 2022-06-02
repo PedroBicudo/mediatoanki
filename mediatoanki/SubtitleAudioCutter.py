@@ -1,10 +1,10 @@
 import logging
 from typing import List
 
-from src.model.Subtitle import Subtitle
-from src.model.file.Audio import Audio
-from src.model.file.Video import Video
-from src.utils.CopyUtils import deep_copy_of_subs
+from mediatoanki.model.Subtitle import Subtitle
+from mediatoanki.model.file.Audio import Audio
+from mediatoanki.model.file.Video import Video
+from mediatoanki.utils.CopyUtils import deep_copy_of_subs
 
 
 class SubtitleAudioCutter:

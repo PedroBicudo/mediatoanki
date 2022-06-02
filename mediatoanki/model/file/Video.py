@@ -2,7 +2,7 @@ import os
 
 from moviepy.video.io.VideoFileClip import VideoFileClip
 
-from src.utils.VideoPathUtils import VideoPathUtils
+from mediatoanki.utils.VideoPathUtils import VideoPathUtils
 
 
 class Video:

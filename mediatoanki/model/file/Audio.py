@@ -2,7 +2,7 @@ import os
 
 from moviepy.audio.io.AudioFileClip import AudioFileClip
 
-from src.model.file.File import File
+from mediatoanki.model.file.File import File
 
 
 class Audio(File):

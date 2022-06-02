@@ -1,7 +1,7 @@
 import unittest
 from datetime import timedelta
 
-from src.utils.TimeUtils import TimeUtils
+from mediatoanki.utils.TimeUtils import TimeUtils
 
 
 class MyTestCase(unittest.TestCase):

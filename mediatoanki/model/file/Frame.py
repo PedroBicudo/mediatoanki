@@ -1,6 +1,6 @@
 import os
-from src.model.file.File import File
-from src.model.file.Video import Video
+from mediatoanki.model.file.File import File
+from mediatoanki.model.file.Video import Video
 
 
 class Frame(File):
