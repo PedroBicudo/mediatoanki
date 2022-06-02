@@ -2,8 +2,8 @@
 É um conjunto de scripts que gera um deck anki a partir de algum vídeo com legendas.
 
 ## Instalando requisitos
-```
-pip install -r requirements.txt
+```shell
+poetry install
 ```
 
 ## Sintaxe
@@ -28,7 +28,7 @@ optional arguments:
 
 ### Gerando um deck
 ```
-python mediatoanki.py mrrobot.mkv mrrobot.vtt decks
+poetry run python mediatoanki.py mrrobot.mkv mrrobot.vtt decks
 ```
 #### Saida do comando
 ![img.png](images/img.png)

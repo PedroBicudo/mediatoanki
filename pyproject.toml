@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "mediatoanki"
+version = "0.1.0"
+description = ""
+authors = ["Pedro Bicudo <pedrobicudoa@gmail.com>"]
+
+[tool.poetry.scripts]
+mediatoanki="mediatoanki:start"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+genanki = "^0.13.0"
+moviepy = "^1.0.3"
+typing-extensions = "^4.2.0" # Fix https://github.com/numpy/numpy/issues/19521
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

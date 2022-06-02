@@ -1,12 +1,12 @@
 import os
 from argparse import Namespace
 
-from src.AnkiDeckGenerator import AnkiDeckGenerator
-from src.SubtitleAudioCutter import SubtitleAudioCutter
-from src.SubtitleFrameExtractor import SubtitleFrameExtractor
-from src.SubtitleParser import SubtitleParser
-from src.model.Subtitle import Subtitle
-from src.model.file.Video import Video
+from mediatoanki.AnkiDeckGenerator import AnkiDeckGenerator
+from mediatoanki.SubtitleAudioCutter import SubtitleAudioCutter
+from mediatoanki.SubtitleFrameExtractor import SubtitleFrameExtractor
+from mediatoanki.SubtitleParser import SubtitleParser
+from mediatoanki.model.Subtitle import Subtitle
+from mediatoanki.model.file.Video import Video
 
 
 class MediaToAnkiArgParser:

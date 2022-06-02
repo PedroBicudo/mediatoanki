@@ -1,4 +1,4 @@
-from src.model.subtitle_formats.SubtitleFormat import SubtitleFormat
+from mediatoanki.model.subtitle_formats.SubtitleFormat import SubtitleFormat
 
 
 class Vtt(SubtitleFormat):

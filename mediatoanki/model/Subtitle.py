@@ -1,8 +1,8 @@
 from datetime import timedelta, datetime
 
-from src.model.file.Audio import Audio
-from src.model.file.Frame import Frame
-from src.utils.TimeUtils import TimeUtils
+from mediatoanki.model.file.Audio import Audio
+from mediatoanki.model.file.Frame import Frame
+from mediatoanki.utils.TimeUtils import TimeUtils
 
 
 class Subtitle:

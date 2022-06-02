@@ -3,10 +3,10 @@ import re
 from datetime import timedelta
 from typing import List
 
-from src.model.Subtitle import Subtitle
-from src.model.subtitle_formats.Srt import Srt
-from src.model.subtitle_formats.SubtitleFormat import SubtitleFormat
-from src.model.subtitle_formats.Vtt import Vtt
+from mediatoanki.model.Subtitle import Subtitle
+from mediatoanki.model.subtitle_formats.Srt import Srt
+from mediatoanki.model.subtitle_formats.SubtitleFormat import SubtitleFormat
+from mediatoanki.model.subtitle_formats.Vtt import Vtt
 
 
 class SubtitleParser:
