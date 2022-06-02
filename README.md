@@ -8,7 +8,7 @@ poetry install
 
 ## Sintaxe
 ```
-usage: mediatoanki.py [-h] [--padstart seconds] [--padend seconds]              
+usage: app.py [-h] [--padstart seconds] [--padend seconds]              
                       video_source subtitle_source dest                         
                                                                                 
 Create an anki deck given media and subtitles.                                  
@@ -28,7 +28,7 @@ optional arguments:
 
 ### Gerando um deck
 ```
-poetry run python mediatoanki.py mrrobot.mkv mrrobot.vtt decks
+poetry run python app.py mrrobot.mkv mrrobot.vtt decks
 ```
 #### Saida do comando
 <img src="https://user-images.githubusercontent.com/43938917/171723469-95ed9889-4dbe-4516-a229-2ab8c5d0436f.png" width="500"/>
