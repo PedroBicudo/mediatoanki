@@ -31,7 +31,7 @@ optional arguments:
 poetry run python mediatoanki.py mrrobot.mkv mrrobot.vtt decks
 ```
 #### Saida do comando
-![img.png](images/img.png)
+<img src="https://user-images.githubusercontent.com/43938917/171723469-95ed9889-4dbe-4516-a229-2ab8c5d0436f.png" width="500"/>
 
 ### Importando o deck para o anki
 O deck gerado está em formato .apkg.
@@ -45,12 +45,12 @@ $ anki deck.apkg
 Clique no botão File > Import e selecione o arquivo .apkg.
 
 #### Resultado
-![img_3.png](images/img_3.png)
+<img src="https://user-images.githubusercontent.com/43938917/171723594-058907d5-536d-430f-a4ed-f050e8a34c26.png" width="500"/>
 
 ### Armazenando os arquivos de media no anki
 Após o deck ser importado os arquivos armazenados na pasta media 
 devem ser enviados para a pasta `collection.media` do usuário do anki. Caso contrário
 os flash-cards ficaram sem as imagens e aúdios.
 #### Resultado
-![img_4.png](images/img_4.png)
+<img src="https://user-images.githubusercontent.com/43938917/171723668-7c50e11e-c63a-43de-a133-d8d1d0f24ae7.png" width="500"/>
 
