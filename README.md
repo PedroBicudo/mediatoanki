@@ -6,6 +6,13 @@
 poetry install
 ```
 
+## Ambiente de desenvolvimento
+
+### Executando os testes em ambiente de desenvolvimento
+```shell
+poetry run pytest
+```
+
 ## Sintaxe
 ```
 usage: app.py [-h] [--padstart seconds] [--padend seconds]              
