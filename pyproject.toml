@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "mediatoanki"
 version = "0.1.0"
-description = ""
+description = "Cria decks para o anki a partir de vídeo e legenda."
 authors = ["Pedro Bicudo <pedrobicudoa@gmail.com>"]
 
 [tool.poetry.scripts]
