@@ -42,7 +42,7 @@ optional arguments:
 
 ### Gerando um deck
 ```
-poetry run python app.py mrrobot.mkv mrrobot.vtt decks
+poetry run mediatoanki mrrobot.mkv mrrobot.vtt decks
 ```
 #### Saida do comando
 <img src="https://user-images.githubusercontent.com/43938917/171723469-95ed9889-4dbe-4516-a229-2ab8c5d0436f.png" width="500"/>

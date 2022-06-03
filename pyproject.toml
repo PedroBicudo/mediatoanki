@@ -5,7 +5,7 @@ description = "Cria decks para o anki a partir de vídeo e legenda."
 authors = ["Pedro Bicudo <pedrobicudoa@gmail.com>"]
 
 [tool.poetry.scripts]
-mediatoanki="mediatoanki:start"
+mediatoanki="mediatoanki.app:main"
 
 [tool.poetry.dependencies]
 python = "^3.7"
