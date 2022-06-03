@@ -1,4 +1,5 @@
 import os
+
 from mediatoanki.model.file.File import File
 from mediatoanki.model.file.Video import Video
 
@@ -10,12 +11,12 @@ class Frame(File):
         self._frame_second = frame_second
 
     def write_at(self, name: str, dir_destination: str):
-        print(f"\tSaving frame...", end="")
+        print("\tSaving frame...", end="")
         try:
             self._write_file(name, dir_destination)
             print("Done")
 
-        except Exception as error:
+        except Exception:
             print("Failed")
 
     def _write_file(self, name: str, dir_destination: str):

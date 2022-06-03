@@ -1,7 +1,9 @@
 import os
 import random
 from typing import List
+
 import genanki
+
 from mediatoanki.model.MediaToAnkiTemplate import MediaToAnkiTemplate
 from mediatoanki.model.Subtitle import Subtitle
 
@@ -23,10 +25,16 @@ class AnkiDeckGenerator:
 
     def generate_deck_based_on(self, subtitles: List[Subtitle]):
         model = MediaToAnkiTemplate().model
-        deck = genanki.Deck(AnkiDeckGenerator._get_random_deck_id(), self._deck_name)
+        deck = genanki.Deck(
+            AnkiDeckGenerator._get_random_deck_id(),
+            self._deck_name,
+        )
 
         for sub in subtitles:
-            note = genanki.Note(model=model, fields=AnkiDeckGenerator._get_fields_from_sub(sub))
+            note = genanki.Note(
+                model=model,
+                fields=AnkiDeckGenerator._get_fields_from_sub(sub),
+            )
             deck.add_note(note)
 
         path = os.path.join(self.__destination, f"{self._deck_name}.apkg")

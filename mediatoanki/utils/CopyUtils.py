@@ -1,4 +1,5 @@
 from typing import List
+
 from mediatoanki.model.Subtitle import Subtitle
 
 

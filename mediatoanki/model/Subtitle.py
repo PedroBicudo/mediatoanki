@@ -1,4 +1,4 @@
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 
 from mediatoanki.model.file.Audio import Audio
 from mediatoanki.model.file.Frame import Frame
@@ -13,12 +13,20 @@ class Subtitle:
 
     def __init__(self, time_start: timedelta, time_end: timedelta):
         self._validate_time_range(time_start, time_end)
-        self._scene_id = f"{self._time_start.total_seconds()}{self._time_end.total_seconds()}"
-        self._datetime_id = datetime.now().strftime("%d%m%Y%H%M%S")
+        self._scene_id = (
+            f"{self._time_start.total_seconds()}"
+            f"{self._time_end.total_seconds()}"
+        )
+        self._datetime_id = datetime.now()\
+            .strftime("%d%m%Y%H%M%S")
 
     def _validate_time_range(self, time_start: timedelta, time_end: timedelta):
-        if not TimeUtils.is_time_range_valid(time_start.total_seconds(), time_end.total_seconds()):
-            raise ValueError("time range (seconds_start -> seconds_stop) invalid.")
+        if not TimeUtils.is_time_range_valid(
+                time_start.total_seconds(),
+                time_end.total_seconds()
+        ):
+            msg = "time range (seconds_start -> seconds_stop) invalid."
+            raise ValueError(msg)
 
         self._time_start: timedelta = time_start
         self._time_end: timedelta = time_end
