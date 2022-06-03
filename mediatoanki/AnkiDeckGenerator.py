@@ -1,11 +1,11 @@
 import os
-import random
 from typing import List
 
 import genanki
 
 from mediatoanki.deck.flashcard.FlashCardTemplate import FlashCardTemplate
 from mediatoanki.model.Subtitle import Subtitle
+from mediatoanki.utils.AnkiUtils import AnkiUtils
 from mediatoanki.utils.FileUtils import FileUtils
 
 
@@ -21,7 +21,7 @@ class AnkiDeckGenerator:
     def generate_deck_based_on(self, subtitles: List[Subtitle]):
         model = FlashCardTemplate().model
         deck = genanki.Deck(
-            AnkiDeckGenerator._get_random_deck_id(),
+            AnkiUtils.generate_deck_id(),
             self._deck_name,
         )
 
@@ -44,7 +44,3 @@ class AnkiDeckGenerator:
             f"{subtitle.text}"
             "", "", "", "", ""
         ]
-
-    @staticmethod
-    def _get_random_deck_id() -> int:
-        return random.randrange(1 << 30, 1 << 31)
