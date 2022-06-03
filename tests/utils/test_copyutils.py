@@ -23,7 +23,9 @@ class CopyUtilsTestCase(unittest.TestCase):
             msg="As listas devem ser diferentes."
         )
         for dummy, copy in zip(dummies, copies):
-            self._test_if_parameters_from_dummy_and_copy_are_correct(dummy, copy)
+            self._test_if_parameters_from_dummy_and_copy_are_correct(
+                dummy, copy
+            )
 
     def test_default_copy_subtitle(self):
         dummy = self.get_subtitle_instance()
@@ -35,7 +37,11 @@ class CopyUtilsTestCase(unittest.TestCase):
         )
         self._test_if_parameters_from_dummy_and_copy_are_correct(dummy, copy)
 
-    def _test_if_parameters_from_dummy_and_copy_are_correct(self, dummy: Subtitle, copy: Subtitle):
+    def _test_if_parameters_from_dummy_and_copy_are_correct(
+            self,
+            dummy: Subtitle,
+            copy: Subtitle
+    ):
         self.assertEqual(
             dummy.time_start,
             copy.time_start,
@@ -54,12 +60,18 @@ class CopyUtilsTestCase(unittest.TestCase):
         self.assertEqual(
             dummy.audio,
             copy.audio,
-            msg="audio deve conter o mesmo endereço de memória  ou serem ambos None."
+            msg=(
+                 "audio deve conter o mesmo endereço de memória "
+                 "ou serem ambos None."
+            )
         )
         self.assertEqual(
             dummy.frame,
             copy.frame,
-            msg="frame deve conter o mesmo endereço de memória ou serem ambos None."
+            msg=(
+                "frame deve conter o mesmo endereço de memória "
+                "ou serem ambos None."
+            )
         )
 
 

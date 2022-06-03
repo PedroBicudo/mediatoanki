@@ -13,12 +13,12 @@ class Audio(File):
         self._audio: AudioFileClip = audio
 
     def write_at(self, name: str, dir_destination: str):
-        print(f"\tSaving audio...", end="")
+        print("\tSaving audio...", end="")
         try:
             self._write_file(name, dir_destination)
             print("Done")
 
-        except Exception as _:
+        except Exception:
             print("Failed")
 
     def _write_file(self, name: str, dir_destination: str):

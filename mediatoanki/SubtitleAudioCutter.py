@@ -1,9 +1,8 @@
-import logging
 from typing import List
 
-from mediatoanki.model.Subtitle import Subtitle
 from mediatoanki.model.file.Audio import Audio
 from mediatoanki.model.file.Video import Video
+from mediatoanki.model.Subtitle import Subtitle
 from mediatoanki.utils.CopyUtils import deep_copy_of_subs
 
 
@@ -12,7 +11,9 @@ class SubtitleAudioCutter:
     def __init__(self, video: Video):
         self.__video = video
 
-    def get_subtitles_with_one_audio_representing_the_subtitle_scene(self, subtitles: List[Subtitle]) -> List[Subtitle]:
+    def get_subtitles_with_one_audio_representing_the_subtitle_scene(
+            self, subtitles: List[Subtitle]
+    ) -> List[Subtitle]:
         subs_with_audio = deep_copy_of_subs(subtitles)
         for sub in subs_with_audio:
 

@@ -1,12 +1,13 @@
-from datetime import timedelta
-from re import sub
-from mediatoanki.model.subtitle_formats.Vtt import Vtt
-from mediatoanki.model.subtitle_formats.Srt import Srt
-from mediatoanki.SubtitleParser import SubtitleParser
 import unittest
+from datetime import timedelta
+
+from mediatoanki.model.subtitle_formats.Srt import Srt
+from mediatoanki.model.subtitle_formats.Vtt import Vtt
+from mediatoanki.SubtitleParser import SubtitleParser
+
 
 class SubtitleParserTestCase(unittest.TestCase):
-    
+
     def test_get_file_format(self):
         srt = SubtitleParser._get_file_format("subtitle.vtt.srt")
         vtt = SubtitleParser._get_file_format("subtitle.srt.vtt")
@@ -15,24 +16,24 @@ class SubtitleParserTestCase(unittest.TestCase):
 
         self.assertEqual(
             srt,
-            "srt", 
+            "srt",
             "Teste: format(subtitle.vtt.srt) =="
         )
 
         self.assertNotEqual(
-            srt_blank, 
+            srt_blank,
             "srt",
             "Teste: subtitle.srt. != srt"
         )
-        
+
         self.assertEqual(
-            vtt, 
+            vtt,
             "vtt",
             "Teste: format(subtitle.srt.vtt) == vtt"
         )
-        
+
         self.assertNotEqual(
-            vtt_blank, 
+            vtt_blank,
             "vtt",
             "Teste: subtitle.vtt. != vtt"
         )
@@ -66,7 +67,7 @@ class SubtitleParserTestCase(unittest.TestCase):
             True,
             "Teste: 00:00:00.000 has hour field? True"
         )
-    
+
     def test_get_regex_based_on_file_format(self):
         sub_parser = SubtitleParser()
         non_existent = "abcdefgh"
@@ -85,7 +86,10 @@ class SubtitleParserTestCase(unittest.TestCase):
             "Teste: regex class of vtt == Vtt"
         )
 
-        with self.assertRaises(NotImplementedError, msg="Teste: formato non_existent raises NotImplementedError"):
+        with self.assertRaises(
+                NotImplementedError,
+                msg="Teste: formato non_existent raises NotImplementedError"
+        ):
             sub_parser._get_regex_based_on_file_format(non_existent),
 
     def test_is_not_blank_line(self):
@@ -121,78 +125,121 @@ class SubtitleParserTestCase(unittest.TestCase):
     def test_convert_time_text_to_timedelta_with_vtt_format(self):
         vtt = Vtt
 
-        time_vtt_timedelta = timedelta(hours=0.0, minutes=3.0, seconds=33.0, milliseconds=123)
-        time_vtt_test = "00:03:33.123"
-        timedelta_time_vtt_test = SubtitleParser.convert_time_text_to_timedelta(
-            time_vtt_test, vtt
+        time_vtt_timedelta = timedelta(
+            hours=0.0,
+            minutes=3.0,
+            seconds=33.0,
+            milliseconds=123,
         )
+        time_vtt_test = "00:03:33.123"
+        timedelta_time_vtt_test = SubtitleParser.\
+            convert_time_text_to_timedelta(
+                time_vtt_test, vtt
+            )
+
         self.assertEqual(
             time_vtt_timedelta, timedelta_time_vtt_test,
             msg=f"Vtt: {time_vtt_timedelta} == {time_vtt_test}"
         )
 
-
-        time_vtt_nohour__timedelta = timedelta(hours=0.0, minutes=1.0, seconds=59.)
-        time_vtt_nohour_format = "01:59.000"
-        timedelta_time_vtt_nohour_format = SubtitleParser.convert_time_text_to_timedelta(
-            time_vtt_nohour_format, vtt
+        time_vtt_nohour__timedelta = timedelta(
+            hours=0.0,
+            minutes=1.0,
+            seconds=59.0,
         )
+        time_vtt_nohour_format = "01:59.000"
+        timedelta_time_vtt_nohour_format = SubtitleParser\
+            .convert_time_text_to_timedelta(
+                time_vtt_nohour_format, vtt
+            )
         self.assertEqual(
             time_vtt_nohour__timedelta, timedelta_time_vtt_nohour_format,
-            msg=f"Vtt: {time_vtt_nohour__timedelta} == {timedelta_time_vtt_nohour_format}"
+            msg=(
+                f"Vtt: {time_vtt_nohour__timedelta}"
+                f" == {timedelta_time_vtt_nohour_format}"
+            )
         )
 
-
-        time_vtt_nohour_nomilliseconds_timedelta = timedelta(hours=0.0, minutes=3.0, seconds=3.0)
+        time_vtt_nohour_nomilliseconds_timedelta = timedelta(
+            hours=0.0,
+            minutes=3.0,
+            seconds=3.0,
+        )
         time_vtt_nohour_nomilliseconds_format = "03:03"
-        timedelta_time_vtt_nomilliseconds_format = SubtitleParser.convert_time_text_to_timedelta(
-            time_vtt_nohour_nomilliseconds_format, vtt
-        )
+        timedelta_time_vtt_nomilliseconds_format = SubtitleParser\
+            .convert_time_text_to_timedelta(
+                time_vtt_nohour_nomilliseconds_format, vtt
+            )
         self.assertEqual(
-            time_vtt_nohour_nomilliseconds_timedelta, timedelta_time_vtt_nomilliseconds_format,
-            msg=f"Vtt: {time_vtt_nohour__timedelta} == {timedelta_time_vtt_nohour_format}"
+            time_vtt_nohour_nomilliseconds_timedelta,
+            timedelta_time_vtt_nomilliseconds_format,
+            msg=(
+                f"Vtt: {time_vtt_nohour__timedelta} "
+                f"== {timedelta_time_vtt_nohour_format}"
+            ),
         )
 
     def test_convert_time_text_to_timedelta_with_srt_format(self):
         srt = Srt
 
-        time_srt_timedelta = timedelta(hours=0.0, minutes=3.0, seconds=33.0, milliseconds=123)
-        time_srt_test = "00:03:33,123"
-        timedelta_time_srt_test = SubtitleParser.convert_time_text_to_timedelta(
-            time_srt_test, srt
+        time_srt_timedelta = timedelta(
+            hours=0.0,
+            minutes=3.0,
+            seconds=33.0,
+            milliseconds=123,
         )
+        time_srt_test = "00:03:33,123"
+        timedelta_time_srt_test = SubtitleParser\
+            .convert_time_text_to_timedelta(
+                time_srt_test, srt
+            )
         self.assertEqual(
             time_srt_timedelta, timedelta_time_srt_test,
             msg=f"Srt: {time_srt_timedelta} == {time_srt_test}"
         )
 
-
-        time_srt_nohour__timedelta = timedelta(hours=0.0, minutes=1.0, seconds=59.0)
-        time_srt_nohour_format = "01:59,000"
-        timedelta_time_srt_nohour_format = SubtitleParser.convert_time_text_to_timedelta(
-            time_srt_nohour_format, srt
+        time_srt_nohour__timedelta = timedelta(
+            hours=0.0,
+            minutes=1.0,
+            seconds=59.0,
         )
+        time_srt_nohour_format = "01:59,000"
+        timedelta_time_srt_nohour_format = SubtitleParser\
+            .convert_time_text_to_timedelta(
+                time_srt_nohour_format, srt
+            )
         self.assertEqual(
             time_srt_nohour__timedelta, timedelta_time_srt_nohour_format,
-            msg=f"Srt: {time_srt_nohour__timedelta} == {timedelta_time_srt_nohour_format}"
+            msg=(
+                f"Srt: {time_srt_nohour__timedelta} "
+                f"== {timedelta_time_srt_nohour_format}"
+            )
         )
 
-
-        time_srt_nohour_nomilliseconds_timedelta = timedelta(hours=0.0, minutes=3.0, seconds=3.0)
+        time_srt_nohour_nomilliseconds_timedelta = timedelta(
+            hours=0.0,
+            minutes=3.0,
+            seconds=3.0,
+        )
         time_srt_nohour_nomilliseconds_format = "03:03"
-        timedelta_time_srt_nomilliseconds_format = SubtitleParser.convert_time_text_to_timedelta(
-            time_srt_nohour_nomilliseconds_format, srt
-        )
+        timedelta_time_srt_nomilliseconds_format = SubtitleParser\
+            .convert_time_text_to_timedelta(
+                time_srt_nohour_nomilliseconds_format, srt
+            )
         self.assertEqual(
-            time_srt_nohour_nomilliseconds_timedelta, timedelta_time_srt_nomilliseconds_format,
-            msg=f"Srt: {time_srt_nohour__timedelta} == {timedelta_time_srt_nomilliseconds_format}"
+            time_srt_nohour_nomilliseconds_timedelta,
+            timedelta_time_srt_nomilliseconds_format,
+            msg=(
+                f"Srt: {time_srt_nohour__timedelta} "
+                f"== {timedelta_time_srt_nomilliseconds_format}"
+            )
         )
 
     def test_get_text_from_scene(self):
         """ Teste de obtencao de texto da cena.
 
             Para extrair o texto de uma cena especifica,
-            o algoritmo vai ler as linhas ate encontrar uma 
+            o algoritmo vai ler as linhas ate encontrar uma
             linha em branco ou chegar no final do arquivo.
 
             Exemplo:
@@ -208,7 +255,7 @@ class SubtitleParserTestCase(unittest.TestCase):
                     text
                     00:00:00.000 -> 00:00:00.000
                     text
-                
+
                 Invalido:
 
                     00:00:00.000 -> 00:00:00.000
@@ -245,7 +292,8 @@ class SubtitleParserTestCase(unittest.TestCase):
         # Teste 1 linha: (space)
         file_lines_one_space = [""]
         correct_one_space = ""
-        result_one_space = sub_parser._get_text_from_scene(file_lines_one_space)
+        result_one_space = sub_parser\
+            ._get_text_from_scene(file_lines_one_space)
         self.assertEqual(
             result_one_space,
             correct_one_space,
@@ -265,7 +313,8 @@ class SubtitleParserTestCase(unittest.TestCase):
         # Teste 2 linhas: (text, space)
         file_lines_two_text_space = ["text", ""]
         correct_two_text_space = "text"
-        result_two_text_space = sub_parser._get_text_from_scene(file_lines_two_text_space)
+        result_two_text_space = sub_parser\
+            ._get_text_from_scene(file_lines_two_text_space)
         self.assertEqual(
             result_two_text_space,
             correct_two_text_space,
@@ -275,22 +324,25 @@ class SubtitleParserTestCase(unittest.TestCase):
         # Teste 2 linhas: (space, text)
         file_lines_two_space_text = ["", "text"]
         correct_two_space_text = ""
-        result_two_space_text = sub_parser._get_text_from_scene(file_lines_two_space_text)
+        result_two_space_text = sub_parser\
+            ._get_text_from_scene(file_lines_two_space_text)
         self.assertEqual(
             result_two_space_text,
             correct_two_space_text,
             msg="text from scene: [\"\", \"text\"] should return \"\""
-        )        
+        )
 
         # Teste 3 linhas: (text, space, text)
         file_lines_three_text_space_text = ["text", "", "text"]
         correct_three_text_space_text = "text"
-        result_three_text_space_text = sub_parser._get_text_from_scene(file_lines_three_text_space_text)
+        result_three_text_space_text = sub_parser\
+            ._get_text_from_scene(file_lines_three_text_space_text)
         self.assertEqual(
             result_three_text_space_text,
             correct_three_text_space_text,
             msg="text from scene: [\"\", \"text\"] should return \"\""
         )
+
 
 if __name__ == '__main__':
     unittest.main()

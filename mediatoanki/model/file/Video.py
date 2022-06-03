@@ -25,4 +25,3 @@ class Video:
     @property
     def video(self) -> VideoFileClip:
         return self._video
-

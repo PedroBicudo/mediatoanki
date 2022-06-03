@@ -16,7 +16,7 @@ class SubtitleFormat(metaclass=abc.ABCMeta):
     ex
         00:01:00
 
-    MILLISECONDS_DELIMITER: Caractere que representa o delimitador de H:M:S e milisegundos.
+    MILLISECONDS_DELIMITER: Delimitador de milisegundos.
     ex
         00:01:00,123 -> ["00:01:00", "123"]
         00:01:00.123 -> ["00:01:00", "123"]

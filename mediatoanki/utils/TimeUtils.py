@@ -21,7 +21,9 @@ class TimeUtils:
             self._is_pad_start_more_than_pad_end_with(seconds_added)
         )
 
-    def _is_pad_start_more_than_pad_end_with(self, seconds_added: timedelta) -> bool:
+    def _is_pad_start_more_than_pad_end_with(
+            self, seconds_added: timedelta
+    ) -> bool:
         time_start_new = self._time_start + seconds_added
         return time_start_new >= self._time_end
 
@@ -31,11 +33,17 @@ class TimeUtils:
                 self.is_pad_end_less_than_pad_start_with(seconds_added)
         )
 
-    def is_pad_end_less_than_pad_start_with(self, seconds_added: timedelta) -> bool:
+    def is_pad_end_less_than_pad_start_with(
+            self, seconds_added: timedelta
+    ) -> bool:
         return self._time_end + seconds_added <= self._time_start
 
-    def _is_time_start_negative_with(self, seconds_added: timedelta):
-        return self._is_timedelta_negative_with(self._time_start, seconds_added)
+    def _is_time_start_negative_with(
+            self, seconds_added: timedelta
+    ):
+        return self._is_timedelta_negative_with(
+            self._time_start, seconds_added
+        )
 
     def _is_time_end_negative_with(self, seconds_added: timedelta):
         return self._is_timedelta_negative_with(self._time_end, seconds_added)

@@ -19,7 +19,9 @@ class SubtitleParser:
         while self._is_not_empty(file_lines):
             current_line = file_lines.pop(0)
             if self._is_time_from_scene(current_line, subtitle_regex):
-                current_subtitle = self._get_subtitle_with_times_defined(current_line, subtitle_regex)
+                current_subtitle = self._get_subtitle_with_times_defined(
+                    current_line, subtitle_regex
+                )
                 current_subtitle.text = self._get_text_from_scene(file_lines)
                 subtitles.append(current_subtitle)
 
@@ -30,7 +32,10 @@ class SubtitleParser:
         return re.match(subtitle_regex.REGEX_LINE, text)
 
     @staticmethod
-    def _get_subtitle_with_times_defined(line_time: str, subtitle_regex: SubtitleFormat):
+    def _get_subtitle_with_times_defined(
+            line_time: str,
+            subtitle_regex: SubtitleFormat
+    ):
         time_start = SubtitleParser.convert_time_text_to_timedelta(
             re.match(subtitle_regex.REGEX_TIME_START, line_time).group(0),
             subtitle_regex
@@ -48,7 +53,8 @@ class SubtitleParser:
 
         text_scene = file_lines.pop(0).strip()
         text_after_time = text_scene
-        while self._is_not_empty(file_lines) and self._is_not_blank_line(text_after_time):
+        while self._is_not_empty(file_lines) and \
+                self._is_not_blank_line(text_after_time):
             text_after_time = file_lines.pop(0).strip()
             text_scene += f" {text_after_time}"
 
@@ -65,7 +71,7 @@ class SubtitleParser:
         try:
             return self._get_lines_from_file(filename)
 
-        except Exception as error:
+        except Exception:
             raise Exception("Não foi possível abrir o arquivo de legendas.")
 
     def _get_lines_from_file(self, filename: str) -> List[str]:
@@ -75,28 +81,39 @@ class SubtitleParser:
         return lines
 
     @staticmethod
-    def convert_time_text_to_timedelta(time: str, subtitle_regex: SubtitleFormat) -> timedelta:
+    def convert_time_text_to_timedelta(
+            time: str,
+            subtitle_regex: SubtitleFormat
+    ) -> timedelta:
         time_list = SubtitleParser._get_default_time_list()
-        time_split = SubtitleParser._get_hours_milliseconds_splitted(time, subtitle_regex)
+        time_split = SubtitleParser\
+            ._get_hours_milliseconds_splitted(
+                time, subtitle_regex
+            )
         SubtitleParser._update_hours(time_list, *time_split)
         return SubtitleParser._convert_time_list_to_timedelta(time_list)
 
     @staticmethod
-    def _get_hours_milliseconds_splitted(time: str, subtitle_regex: SubtitleFormat):
+    def _get_hours_milliseconds_splitted(
+            time: str,
+            subtitle_regex: SubtitleFormat
+    ):
         return time.split(subtitle_regex.MILLISECONDS_DELIMITER)
-    
+
     @staticmethod
     def _get_default_time_list():
         return [
-            0.0, # hour
-            0.0, # minute
-            0.0, # second
-            0.0  # milliseconds
+            0.0,  # hour
+            0.0,  # minute
+            0.0,  # second
+            0.0   # milliseconds
         ]
-    
+
     @staticmethod
     def _update_hours(time_list: dict, hours: str, milliseconds: str = None):
-        SubtitleParser._update_milliseconds_in_time_list(time_list, milliseconds)
+        SubtitleParser._update_milliseconds_in_time_list(
+            time_list, milliseconds
+        )
         SubtitleParser._update_hours_in_time_list(time_list, hours)
 
     @staticmethod
@@ -130,12 +147,16 @@ class SubtitleParser:
     def _has_hour_field(time: str) -> bool:
         return time.count(":") == 2
 
-    def _get_regex_based_on_file_format(self, file_format: str) -> SubtitleFormat:
+    def _get_regex_based_on_file_format(
+            self, file_format: str
+    ) -> SubtitleFormat:
         sub_format = SubtitleParser._get_subtitle_regex(file_format)
-        if (sub_format != None):
+        if sub_format is not None:
             return sub_format
-        
-        raise NotImplementedError(f"O formato '{file_format}' não está disponível")
+
+        raise NotImplementedError(
+            f"O formato '{file_format}' não está disponível"
+        )
 
     @staticmethod
     def _get_subtitle_regex(file_format: str) -> SubtitleFormat:

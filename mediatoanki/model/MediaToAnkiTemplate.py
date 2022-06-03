@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import Dict, List
 
 import genanki
 
@@ -46,7 +46,9 @@ class MediaToAnkiTemplate:
                         "<hr id=answer><br>"
                         "<div class=\"expression\">{{EXPRESSION}}</div><br>"
                         "<div class=\"phonetic\">{{PHONETIC}}</div>"
-                        "<div>{{WORD}} <span class=\"translation\">{{TRANSLATION}}</span></div>"
+                        "<div>{{WORD}} "
+                        "<span class=\"translation\">{{TRANSLATION}}</span>"
+                        "</div>"
                         "<div class=\"meaning\">{{MEANING}}</div>"
                 )
             }
@@ -55,9 +57,26 @@ class MediaToAnkiTemplate:
     @staticmethod
     def _get_css() -> str:
         return (
-            ".card {font-family: arial;font-size:20px;text-align:center;color:black;background-color:white;}"
-            "div.snapshot {display: inline-block;width: 500px;height: auto;}"
-            "div > img {width: 100%; height: auto;}"
-            "div.phonetic {font-weight: bold;}"
-            "span.translation {font-weight: bold;}"
-    )
+            ".card {"
+            "font-family: arial;"
+            "font-size:20px;"
+            "text-align:center;"
+            "color:black;"
+            "background-color:white;"
+            "}"
+            "div.snapshot {"
+            "display: inline-block;"
+            "width: 500px;"
+            "height: auto;"
+            "}"
+            "div > img {"
+            "width: 100%; "
+            "height: auto;"
+            "}"
+            "div.phonetic {"
+            "font-weight: bold;"
+            "}"
+            "span.translation {"
+            "font-weight: bold;"
+            "}"
+        )
