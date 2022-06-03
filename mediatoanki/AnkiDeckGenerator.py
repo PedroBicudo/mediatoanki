@@ -6,6 +6,7 @@ import genanki
 
 from mediatoanki.model.MediaToAnkiTemplate import MediaToAnkiTemplate
 from mediatoanki.model.Subtitle import Subtitle
+from mediatoanki.utils.FileUtils import FileUtils
 
 
 class AnkiDeckGenerator:
@@ -14,14 +15,8 @@ class AnkiDeckGenerator:
         self._deck_name = deck_name
 
     def _set_destination(self, destination: str):
-        if not AnkiDeckGenerator._is_destination_valid(destination):
-            raise
-
+        FileUtils.validate_directory(destination)
         self.__destination = destination
-
-    @staticmethod
-    def _is_destination_valid(destination: str) -> bool:
-        return os.path.exists(destination) and os.path.isdir(destination)
 
     def generate_deck_based_on(self, subtitles: List[Subtitle]):
         model = MediaToAnkiTemplate().model

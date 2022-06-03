@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 from mediatoanki.MediaToAnkiArgParser import MediaToAnkiArgParser
 
@@ -38,9 +39,14 @@ parser.add_argument(
 
 
 def main():
-    args = parser.parse_args()
-    media_to_anki = MediaToAnkiArgParser(args)
-    media_to_anki.run()
+    try:
+        args = parser.parse_args()
+        media_to_anki = MediaToAnkiArgParser(args)
+        media_to_anki.run()
+
+    except OSError as e:
+        print("System Error: "+str(e))
+        sys.exit(-1)
 
 
 if __name__ == "__main__":

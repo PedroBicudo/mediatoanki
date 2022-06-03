@@ -2,7 +2,7 @@ import os
 
 from moviepy.video.io.VideoFileClip import VideoFileClip
 
-from mediatoanki.utils.VideoPathUtils import VideoPathUtils
+from mediatoanki.utils.FileUtils import FileUtils
 
 
 class Video:
@@ -13,9 +13,7 @@ class Video:
         self._video = VideoFileClip(video_path)
 
     def _set_video_path(self, video_path: str):
-        if not VideoPathUtils.is_video_valid(video_path):
-            raise
-
+        FileUtils.validate_video(video_path)
         self.__video_path = video_path
 
     @property

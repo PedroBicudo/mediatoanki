@@ -7,6 +7,7 @@ from mediatoanki.model.Subtitle import Subtitle
 from mediatoanki.SubtitleAudioCutter import SubtitleAudioCutter
 from mediatoanki.SubtitleFrameExtractor import SubtitleFrameExtractor
 from mediatoanki.SubtitleParser import SubtitleParser
+from mediatoanki.utils.FileUtils import FileUtils
 
 
 class MediaToAnkiArgParser:
@@ -91,9 +92,9 @@ class MediaToAnkiArgParser:
             subtitle.add_pad_end(self._padend)
 
     def _set_required_args(self, args: Namespace):
-        if not MediaToAnkiArgParser._is_required_arguments_valid(args):
-            raise
-
+        FileUtils.validate_directory(args.destination)
+        FileUtils.validate_video(args.video_source)
+        FileUtils.validate_file(args.subtitle_source)
         self._destination = args.destination
         self._video = Video(args.video_source)
         self._subtitle_source = args.subtitle_source
@@ -101,27 +102,3 @@ class MediaToAnkiArgParser:
     def _set_non_required_args(self, args: Namespace):
         self._padstart = args.padstart
         self._padend = args.padend
-
-    @staticmethod
-    def _is_required_arguments_valid(args: Namespace) -> bool:
-        return (
-            MediaToAnkiArgParser._is_destination_valid(args.destination) and
-            MediaToAnkiArgParser._is_video_valid(args.video_source) and
-            MediaToAnkiArgParser._is_subtitle_valid(args.subtitle_source)
-        )
-
-    @staticmethod
-    def _is_destination_valid(destination: str) -> bool:
-        return os.path.exists(destination) and os.path.isdir(destination)
-
-    @staticmethod
-    def _is_video_valid(video_path: str) -> bool:
-        return MediaToAnkiArgParser._is_file_valid(video_path)
-
-    @staticmethod
-    def _is_subtitle_valid(subtitle_path: str) -> bool:
-        return MediaToAnkiArgParser._is_file_valid(subtitle_path)
-
-    @staticmethod
-    def _is_file_valid(filepath: str) -> bool:
-        return os.path.exists(filepath) and os.path.isfile(filepath)
