@@ -4,7 +4,7 @@ from typing import List
 
 import genanki
 
-from mediatoanki.model.MediaToAnkiTemplate import MediaToAnkiTemplate
+from mediatoanki.deck.flashcard.FlashCardTemplate import FlashCardTemplate
 from mediatoanki.model.Subtitle import Subtitle
 from mediatoanki.utils.FileUtils import FileUtils
 
@@ -19,7 +19,7 @@ class AnkiDeckGenerator:
         self.__destination = destination
 
     def generate_deck_based_on(self, subtitles: List[Subtitle]):
-        model = MediaToAnkiTemplate().model
+        model = FlashCardTemplate().model
         deck = genanki.Deck(
             AnkiDeckGenerator._get_random_deck_id(),
             self._deck_name,
