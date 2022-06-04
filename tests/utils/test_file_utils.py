@@ -122,6 +122,48 @@ class FileUtilsCase(unittest.TestCase):
             )
         )
 
+    @mock.patch("os.path.exists", return_value=True)
+    @mock.patch("os.path.isfile", return_value=True)
+    @mock.patch("os.access", return_value=True)
+    @mock.patch("magic.from_file", return_value="video/mp4")
+    def test_validate_video_is_correct_with_mp4_extension(self, *args):
+        raised = False
+        try:
+            FileUtils.validate_video("foo")
+
+        except FileIsNotAvideo:
+            raised = True
+
+        self.assertFalse(
+            raised,
+            msg=(
+                "Check if validate_video does not raise "
+                "exception with mp4 format"
+            )
+        )
+
+    @mock.patch("os.path.exists", return_value=True)
+    @mock.patch("os.path.isfile", return_value=True)
+    @mock.patch("os.access", return_value=True)
+    @mock.patch("magic.from_file", return_value="application/octet-stream")
+    def test_validate_video_is_correct_with_octet_stream_mime_type(
+            self, *args
+    ):
+        raised = False
+        try:
+            FileUtils.validate_video("foo")
+
+        except FileIsNotAvideo:
+            raised = True
+
+        self.assertFalse(
+            raised,
+            msg=(
+                "Check if validate_video does not raise "
+                "exception with application/octet-stream mime"
+            )
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

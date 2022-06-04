@@ -25,8 +25,14 @@ class FileUtils:
     @staticmethod
     def validate_video(path: str):
         FileUtils.validate_file(path)
-        if "video" not in magic.from_file(path, mime=True):
-            raise FileIsNotAvideo("The provided file is a not video")
+        mime_type = magic.from_file(path, mime=True)
+        if "video" in mime_type:
+            return
+
+        if "octet-stream" in mime_type:
+            return
+
+        raise FileIsNotAvideo("The provided file is a not video")
 
     @staticmethod
     def validate_file(path: str):
