@@ -1,7 +1,10 @@
 import os
 from argparse import Namespace
 
-from mediatoanki.AnkiDeckGenerator import AnkiDeckGenerator
+from mediatoanki.deck.anki.AnkiDeckGenerator import AnkiDeckGenerator
+from mediatoanki.deck.flashcard.FlashCardTemplate import FlashCardTemplate
+from mediatoanki.model.anki.FlashCardFieldsContent import \
+    FlashCardFieldsContent
 from mediatoanki.model.file.Video import Video
 from mediatoanki.model.Subtitle import Subtitle
 from mediatoanki.SubtitleAudioCutter import SubtitleAudioCutter
@@ -65,8 +68,13 @@ class MediaToAnkiArgParser:
             )
 
     def _create_anki_deck(self):
-        deck_gen = AnkiDeckGenerator(self._deck_dir, self._video.name.upper())
-        deck_gen.generate_deck_based_on(self._subtitles)
+        AnkiDeckGenerator(
+            deck_name=self._video.name.upper(),
+            note_template=FlashCardTemplate(),
+            fields_content=FlashCardFieldsContent,
+            subtitles=self._subtitles,
+            destination=self._deck_dir
+        ).generate_deck_file_with_notes()
 
     def _write_audio_and_frames_into_media_dir(self):
         for subtitle in self._subtitles:
