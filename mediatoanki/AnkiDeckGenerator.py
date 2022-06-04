@@ -4,6 +4,8 @@ from typing import List
 import genanki
 
 from mediatoanki.deck.flashcard.FlashCardTemplate import FlashCardTemplate
+from mediatoanki.model.anki.FlashCardFieldsContent import \
+    FlashCardFieldsContent
 from mediatoanki.model.Subtitle import Subtitle
 from mediatoanki.utils.AnkiUtils import AnkiUtils
 from mediatoanki.utils.FileUtils import FileUtils
@@ -26,21 +28,12 @@ class AnkiDeckGenerator:
         )
 
         for sub in subtitles:
+            fields_content = FlashCardFieldsContent(sub.subtitle_id, sub.text)
             note = genanki.Note(
                 model=model,
-                fields=AnkiDeckGenerator._get_fields_from_sub(sub),
+                fields=fields_content,
             )
             deck.add_note(note)
 
         path = os.path.join(self.__destination, f"{self._deck_name}.apkg")
         genanki.Package(deck).write_to_file(path)
-
-    @staticmethod
-    def _get_fields_from_sub(subtitle: Subtitle) -> List[str]:
-        return [
-            f"{subtitle.subtitle_id}",
-            f"[sound:{subtitle.subtitle_id}.mp3]",
-            f"<img src=\"{subtitle.subtitle_id}.png\">",
-            f"{subtitle.text}"
-            "", "", "", "", ""
-        ]
