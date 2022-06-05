@@ -164,6 +164,57 @@ class FileUtilsCase(unittest.TestCase):
             )
         )
 
+    @mock.patch.object(FileUtils, "validate_file")
+    def test_extract_extension_invalid_with_no_extension(self, *args):
+        file = "foo"
+
+        msg = (
+            "Check if exception is raised "
+            "when file does not have extension"
+        )
+
+        with self.assertRaises(ValueError, msg=msg) as context:
+            FileUtils.extract_extension(file)
+
+        msg = "File must have extension"
+        self.assertTrue(
+            msg in str(context.exception),
+            msg=(
+                "Check if extract_extension "
+                "exception message is correct"
+            )
+        )
+
+    @mock.patch.object(FileUtils, "validate_file")
+    def test_extract_extension_with_vtt_dot_png_file(self, *args):
+        file = "foo.vtt.png"
+
+        extension = FileUtils.extract_extension(file)
+        expected = "png"
+
+        msg = "extract extension should return png"
+        self.assertEqual(expected, extension, msg=msg)
+
+    @mock.patch.object(FileUtils, "validate_file")
+    def test_extract_extension_with_uppercase_png(self, *args):
+        file = "foo.PNG"
+
+        extension = FileUtils.extract_extension(file)
+        expected = "png"
+
+        msg = "extract extension should return lowercase png"
+        self.assertEqual(expected, extension, msg=msg)
+
+    @mock.patch.object(FileUtils, "validate_file")
+    def test_extract_extension_with_capitalized_png(self, *args):
+        file = "foo.Png"
+
+        extension = FileUtils.extract_extension(file)
+        expected = "png"
+
+        msg = "extract extension should return lowercase png"
+        self.assertEqual(expected, extension, msg=msg)
+
 
 if __name__ == '__main__':
     unittest.main()

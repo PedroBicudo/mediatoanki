@@ -7,6 +7,17 @@ from mediatoanki.model.exceptions.FileIsNotAvideo import FileIsNotAvideo
 
 class FileUtils:
 
+    NO_EXTENSION = ""
+
+    @staticmethod
+    def extract_extension(path: str) -> str:
+        FileUtils.validate_file(path)
+        _, extension = os.path.splitext(path)
+        if extension == FileUtils.NO_EXTENSION:
+            raise ValueError("File must have extension")
+
+        return extension.split(".")[1].lower()
+
     @staticmethod
     def validate_directory(path: str):
         if not os.path.exists(path):

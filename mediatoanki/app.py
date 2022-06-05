@@ -48,6 +48,14 @@ def main():
         print("System Error: "+str(e))
         sys.exit(-1)
 
+    except RuntimeError as e:
+        print("Error", str(e))
+        sys.exit(-1)
+
+    except Exception as e:
+        print("Error: ", str(e))
+        sys.exit(-1)
+
 
 if __name__ == "__main__":
     main()
