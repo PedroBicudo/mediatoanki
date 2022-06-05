@@ -1,7 +1,7 @@
 import unittest
 from unittest import mock
 
-from mediatoanki.model.subtitle_formats.SubtitleFormat import SubtitleFormat
+from mediatoanki.parsers.SubtitleParserAdapter import SubtitleParserAdapter
 from mediatoanki.utils.FileUtils import FileUtils
 from mediatoanki.utils.SubtitleParserUtils import SubtitleParserUtils
 
@@ -31,9 +31,9 @@ class SubtitleParserUtilsTestCase(unittest.TestCase):
             self, *args
     ):
         file = "a.vtt"
-        subtitle_format = SubtitleParserUtils.get_subtitle_parser(file)
+        subtitle_parser = SubtitleParserUtils.get_subtitle_parser(file)
         self.assertTrue(
-            issubclass(subtitle_format, SubtitleFormat),
+            isinstance(subtitle_parser, SubtitleParserAdapter),
             msg=(
                 "Check if vtt extension returns a "
                 "SubtitleFormat subclass"
@@ -41,9 +41,9 @@ class SubtitleParserUtilsTestCase(unittest.TestCase):
         )
 
         file = "a.srt"
-        subtitle_format = SubtitleParserUtils.get_subtitle_parser(file)
+        subtitle_parser = SubtitleParserUtils.get_subtitle_parser(file)
         self.assertTrue(
-            issubclass(subtitle_format, SubtitleFormat),
+            isinstance(subtitle_parser, SubtitleParserAdapter),
             msg=(
                 "Check if srt extension returns a "
                 "SubtitleFormat subclass"

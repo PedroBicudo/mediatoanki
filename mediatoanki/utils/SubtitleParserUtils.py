@@ -1,15 +1,15 @@
-from typing import Type, Union
+from typing import Union
 
-from mediatoanki.model.subtitle_formats.Srt import Srt
-from mediatoanki.model.subtitle_formats.SubtitleFormat import SubtitleFormat
-from mediatoanki.model.subtitle_formats.Vtt import Vtt
+from mediatoanki.parsers.srt.SrtParser import SrtParser
+from mediatoanki.parsers.SubtitleParserAdapter import SubtitleParserAdapter
+from mediatoanki.parsers.vtt.VttParser import VttParser
 from mediatoanki.utils.FileUtils import FileUtils
 
 
 class SubtitleParserUtils:
 
     @staticmethod
-    def get_subtitle_parser(subtitle_file: str) -> Type[SubtitleFormat]:
+    def get_subtitle_parser(subtitle_file: str) -> SubtitleParserAdapter:
         FileUtils.validate_file(subtitle_file)
         extension = FileUtils.extract_extension(subtitle_file)
         parser = SubtitleParserUtils.supported_extensions(
@@ -25,8 +25,8 @@ class SubtitleParserUtils:
     @staticmethod
     def supported_extensions(
             extension: str
-    ) -> Union[Type[SubtitleFormat], None]:
+    ) -> Union[SubtitleParserAdapter, None]:
         return {
-            "vtt": Vtt,
-            "srt": Srt
+            "vtt": VttParser(),
+            "srt": SrtParser()
         }.get(extension, None)

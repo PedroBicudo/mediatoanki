@@ -9,8 +9,8 @@ from mediatoanki.model.file.Video import Video
 from mediatoanki.model.Subtitle import Subtitle
 from mediatoanki.SubtitleAudioCutter import SubtitleAudioCutter
 from mediatoanki.SubtitleFrameExtractor import SubtitleFrameExtractor
-from mediatoanki.SubtitleParser import SubtitleParser
 from mediatoanki.utils.FileUtils import FileUtils
+from mediatoanki.utils.SubtitleParserUtils import SubtitleParserUtils
 
 
 class MediaToAnkiArgParser:
@@ -29,8 +29,10 @@ class MediaToAnkiArgParser:
         self._create_anki_deck()
 
     def _generate_subs_with_pad(self):
-        subparser = SubtitleParser()
-        self._subtitles = subparser.get_subtitles_from_file(
+        parser = SubtitleParserUtils.get_subtitle_parser(
+            self._subtitle_source
+        )
+        self._subtitles = parser.extract_subtitles(
             self._subtitle_source
         )
         self._update_pad_from_subs()
