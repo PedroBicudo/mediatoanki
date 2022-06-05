@@ -68,30 +68,6 @@ class SubtitleParserTestCase(unittest.TestCase):
             "Teste: 00:00:00.000 has hour field? True"
         )
 
-    def test_get_regex_based_on_file_format(self):
-        sub_parser = SubtitleParser()
-        non_existent = "abcdefgh"
-        srt = "srt"
-        vtt = "vtt"
-
-        self.assertEqual(
-            sub_parser._get_regex_based_on_file_format(srt),
-            Srt,
-            "Teste: regex class of srt == Srt"
-        )
-
-        self.assertEqual(
-            sub_parser._get_regex_based_on_file_format(vtt),
-            Vtt,
-            "Teste: regex class of vtt == Vtt"
-        )
-
-        with self.assertRaises(
-                NotImplementedError,
-                msg="Teste: formato non_existent raises NotImplementedError"
-        ):
-            sub_parser._get_regex_based_on_file_format(non_existent),
-
     def test_is_not_blank_line(self):
         content_list_empty = []
         content_list_not_empty = ["a"]

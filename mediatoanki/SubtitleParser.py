@@ -4,16 +4,14 @@ from datetime import timedelta
 from typing import List
 
 from mediatoanki.model.Subtitle import Subtitle
-from mediatoanki.model.subtitle_formats.Srt import Srt
 from mediatoanki.model.subtitle_formats.SubtitleFormat import SubtitleFormat
-from mediatoanki.model.subtitle_formats.Vtt import Vtt
+from mediatoanki.utils.SubtitleParserUtils import SubtitleParserUtils
 
 
 class SubtitleParser:
 
     def get_subtitles_from_file(self, filename: str) -> List[Subtitle]:
-        file_format = SubtitleParser._get_file_format(filename).lower()
-        subtitle_regex = self._get_regex_based_on_file_format(file_format)
+        subtitle_regex = SubtitleParserUtils.get_subtitle_parser(filename)
         file_lines = self._get_subtitle_file_lines(filename)
         subtitles = []
         while self._is_not_empty(file_lines):
@@ -146,26 +144,6 @@ class SubtitleParser:
     @staticmethod
     def _has_hour_field(time: str) -> bool:
         return time.count(":") == 2
-
-    def _get_regex_based_on_file_format(
-            self, file_format: str
-    ) -> SubtitleFormat:
-        sub_format = SubtitleParser._get_subtitle_regex(file_format)
-        if sub_format is not None:
-            return sub_format
-
-        raise NotImplementedError(
-            f"O formato '{file_format}' não está disponível"
-        )
-
-    @staticmethod
-    def _get_subtitle_regex(file_format: str) -> SubtitleFormat:
-        subs_regex = {
-            "vtt": Vtt,
-            "srt": Srt
-        }
-
-        return subs_regex.get(file_format, None)
 
     @staticmethod
     def _get_file_format(filename: str) -> str:
