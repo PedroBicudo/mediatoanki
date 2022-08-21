@@ -1,4 +1,7 @@
+import os
+import tempfile
 import unittest
+from pathlib import Path
 from unittest import mock
 
 from mediatoanki.model.exceptions.FileIsNotAvideo import FileIsNotAvideo
@@ -6,6 +9,45 @@ from mediatoanki.utils.FileUtils import FileUtils
 
 
 class FileUtilsCase(unittest.TestCase):
+
+    def test_extract_encoding(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            Path(tmp_dir, "sub_iso8859.srt").touch()
+            Path(tmp_dir, "sub_utf8.srt").touch()
+            file_path_iso = os.path.join(tmp_dir, "sub_iso8859.srt")
+            file_path_utf = os.path.join(tmp_dir, "sub_utf8.srt")
+
+            with open(file_path_iso, "w", encoding="iso-8859-1") as tmp_file:
+                tmp_file.write(
+                    (
+                        "98"
+                        "00:05:07,400 --> 00:05:10,400"
+                        "Chocolate cake à la Blake"
+                    ))
+
+            self.assertEqual(
+                "ISO-8859-1",
+                FileUtils.extract_encoding(file_path_iso),
+                msg="Check if encoding is iso-8859-1"
+            )
+
+            with open(file_path_utf, "w", encoding="utf-8") as tmp_file:
+                tmp_file.write(
+                    (
+                        "1"
+                        "00:00:02, 600 --> 00:00:05, 900"
+                        "It seems today that all you see"
+
+                    ))
+
+            self.assertEqual(
+                "ascii",
+                FileUtils.extract_encoding(file_path_utf),
+                msg="Check if encoding is us-ascii"
+            )
+
+            Path(tmp_dir, "sub_iso8859.srt").unlink()
+            Path(tmp_dir, "sub_utf8.srt").unlink()
 
     @mock.patch("os.path.exists", return_value=False)
     def test_validate_directory_not_found(self, *args):
