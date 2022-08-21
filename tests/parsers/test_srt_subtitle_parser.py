@@ -1,18 +1,19 @@
 import os
 import tempfile
 import unittest
+from datetime import timedelta
 from pathlib import Path
 
-from webvtt import Caption
+from pysubs2 import SSAEvent
 
 from mediatoanki.model.exceptions.ParseError import ParseError
-from mediatoanki.parsers.vtt.VttParser import VttParser
+from mediatoanki.parsers.srt.SrtParser import SrtParser
 
 
 class SubtitleParserSrtTestCase(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.vtt_parser = VttParser()
+        self.srt_parser = SrtParser()
 
     def test_srt_extract_subtitles_should_raise_exception_when_file_is_empty(
             self
@@ -28,26 +29,26 @@ class SubtitleParserSrtTestCase(unittest.TestCase):
                 " raises an exception when file is empty"
             )
             with self.assertRaises(ParseError, msg=msg) as context:
-                self.vtt_parser.extract_subtitles(file_path)
+                self.srt_parser.extract_subtitles(file_path)
 
             msg = (
                 "Check if exception raised by extract_subtitle "
                 "from SrtParser is correct"
             )
-            expected = "The file is empty."
+            expected = "No suitable formats"
             self.assertTrue(
                 expected in str(context.exception),
                 msg=msg
             )
             Path(tmp_dir, "sub.srt").unlink()
 
-    def test_vtt_convert_caption_to_subtitle(self):
-        caption = Caption(start="00:09:33,250", end="00:09:39,280")
-        caption.text = "foo"
+    def test_srt_convert_caption_to_subtitle(self):
+        caption = SSAEvent(start=3600, end=4200, text="foo")
 
-        subtitle = self.vtt_parser.convert_caption_to_subtitles([caption])[0]
+        subtitle = self.srt_parser.convert_caption_to_subtitles([caption])[0]
         self.assertEqual(
-            caption.start_in_seconds, subtitle.time_start.total_seconds(),
+            timedelta(milliseconds=caption.start).total_seconds(),
+            subtitle.time_start.total_seconds(),
             msg=(
                 "Check if caption.start_in_seconds is equal "
                 "to subtitle.time_start.total_seconds()"
@@ -55,7 +56,8 @@ class SubtitleParserSrtTestCase(unittest.TestCase):
         )
 
         self.assertEqual(
-            caption.end_in_seconds, subtitle.time_end.total_seconds(),
+            timedelta(milliseconds=caption.end).total_seconds(),
+            subtitle.time_end.total_seconds(),
             msg=(
                 "Check if caption.end_in_seconds is equal "
                 "to subtitle.time_end.total_seconds()"
@@ -63,10 +65,9 @@ class SubtitleParserSrtTestCase(unittest.TestCase):
         )
 
     def test_vtt_convert_caption_to_subtitle_text_without_breaks(self):
-        caption = Caption(start="00:09:33,250", end="00:09:39,280")
-        caption.text = "foo.\nfoo"
+        caption = SSAEvent(start=3600, end=4200, text="foo.\nfoo")
 
-        subtitle = self.vtt_parser.convert_caption_to_subtitles([caption])[0]
+        subtitle = self.srt_parser.convert_caption_to_subtitles([caption])[0]
         expected = "foo.foo"
         self.assertEqual(
             expected, subtitle.text,
@@ -75,7 +76,7 @@ class SubtitleParserSrtTestCase(unittest.TestCase):
 
         caption.text = "foo.\n\nfoo"
 
-        subtitle = self.vtt_parser.convert_caption_to_subtitles([caption])[0]
+        subtitle = self.srt_parser.convert_caption_to_subtitles([caption])[0]
         expected = "foo.foo"
         self.assertEqual(
             expected, subtitle.text,
