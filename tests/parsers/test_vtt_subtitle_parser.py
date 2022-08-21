@@ -1,9 +1,10 @@
 import os
 import tempfile
 import unittest
+from datetime import timedelta
 from pathlib import Path
 
-from webvtt import Caption
+from pysubs2 import SSAEvent
 
 from mediatoanki.model.exceptions.ParseError import ParseError
 from mediatoanki.parsers.vtt.VttParser import VttParser
@@ -34,7 +35,7 @@ class SubtitleParserVttTestCase(unittest.TestCase):
                 "Check if exception raised by extract_subtitle "
                 "from VttParser is correct"
             )
-            expected = "The file is empty."
+            expected = "No suitable formats"
             self.assertTrue(
                 expected in str(context.exception),
                 msg=msg
@@ -42,12 +43,12 @@ class SubtitleParserVttTestCase(unittest.TestCase):
             Path(tmp_dir, "sub.vtt").unlink()
 
     def test_vtt_convert_caption_to_subtitle(self):
-        caption = Caption(start="21:54.280", end="21:56.339")
-        caption.text = "foo"
+        caption = SSAEvent(start=3600, end=4200, text="foo")
 
         subtitle = self.vtt_parser.convert_caption_to_subtitles([caption])[0]
         self.assertEqual(
-            caption.start_in_seconds, subtitle.time_start.total_seconds(),
+            timedelta(milliseconds=caption.start).total_seconds(),
+            subtitle.time_start.total_seconds(),
             msg=(
                 "Check if caption.start_in_seconds is equal "
                 "to subtitle.time_start.total_seconds()"
@@ -55,7 +56,8 @@ class SubtitleParserVttTestCase(unittest.TestCase):
         )
 
         self.assertEqual(
-            caption.end_in_seconds, subtitle.time_end.total_seconds(),
+            timedelta(milliseconds=caption.end).total_seconds(),
+            subtitle.time_end.total_seconds(),
             msg=(
                 "Check if caption.end_in_seconds is equal "
                 "to subtitle.time_end.total_seconds()"
@@ -63,7 +65,7 @@ class SubtitleParserVttTestCase(unittest.TestCase):
         )
 
     def test_vtt_convert_caption_to_subtitle_text_without_breaks(self):
-        caption = Caption(start="21:54.280", end="21:56.339")
+        caption = SSAEvent(start=3600, end=4200, text="foo.\nfoo")
         caption.text = "foo.\nfoo"
 
         subtitle = self.vtt_parser.convert_caption_to_subtitles([caption])[0]

@@ -13,7 +13,7 @@ genanki = "^0.13.0"
 moviepy = "^1.0.3"
 typing-extensions = "^4.2.0" # Fix https://github.com/numpy/numpy/issues/19521
 python-magic = "^0.4.26"
-webvtt-py = "^0.4.6"
+pysubs2 = "^1.4.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
