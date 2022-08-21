@@ -7,13 +7,15 @@ from pysubs2 import Pysubs2Error, SSAEvent
 from mediatoanki.model.exceptions.ParseError import ParseError
 from mediatoanki.model.Subtitle import Subtitle
 from mediatoanki.parsers.SubtitleParserAdapter import SubtitleParserAdapter
+from mediatoanki.utils.FileUtils import FileUtils
 
 
 class VttParser(SubtitleParserAdapter):
 
     def extract_subtitles(self, file: str) -> List[Subtitle]:
         try:
-            captions = list(pysubs2.load(file))
+            file_encoding = FileUtils.extract_encoding(file)
+            captions = list(pysubs2.load(file, encoding=file_encoding))
             return self.convert_caption_to_subtitles(captions)
 
         except FileNotFoundError:

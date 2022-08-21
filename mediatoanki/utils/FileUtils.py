@@ -1,5 +1,6 @@
 import os
 
+import chardet
 import magic
 
 from mediatoanki.model.exceptions.FileIsNotAvideo import FileIsNotAvideo
@@ -8,6 +9,14 @@ from mediatoanki.model.exceptions.FileIsNotAvideo import FileIsNotAvideo
 class FileUtils:
 
     NO_EXTENSION = ""
+
+    @staticmethod
+    def extract_encoding(path: str) -> str:
+        FileUtils.validate_file(path)
+        file = open(path, 'rb')
+        file_binary = file.read()
+        file.close()
+        return chardet.detect(file_binary)["encoding"]
 
     @staticmethod
     def extract_extension(path: str) -> str:
