@@ -3,12 +3,12 @@ from argparse import Namespace
 
 from mediatoanki.deck.anki.AnkiDeckGenerator import AnkiDeckGenerator
 from mediatoanki.deck.flashcard.FlashCardTemplate import FlashCardTemplate
+from mediatoanki.extractors.audio.AudiosExtractor import AudiosExtractor
+from mediatoanki.extractors.frame.FramesExtractor import FramesExtractor
 from mediatoanki.model.anki.FlashCardFieldsContent import \
     FlashCardFieldsContent
 from mediatoanki.model.file.Video import Video
 from mediatoanki.model.Subtitle import Subtitle
-from mediatoanki.SubtitleAudioCutter import SubtitleAudioCutter
-from mediatoanki.SubtitleFrameExtractor import SubtitleFrameExtractor
 from mediatoanki.utils.FileUtils import FileUtils
 from mediatoanki.utils.SubtitleParserUtils import SubtitleParserUtils
 
@@ -22,8 +22,8 @@ class MediaToAnkiArgParser:
 
     def run(self):
         self._generate_subs_with_pad()
-        self._extract_frames_for_each_scene_of_subtitles()
-        self._extract_audio_for_each_scene_of_subtitles()
+        FramesExtractor().extract(self._video, self._subtitles)
+        AudiosExtractor().extract(self._video, self._subtitles)
         self._create_dir_to_store_deck_and_media()
         self._write_audio_and_frames_into_media_dir()
         self._create_anki_deck()
@@ -54,20 +54,6 @@ class MediaToAnkiArgParser:
         self._deck_media_dir = os.path.join(self._deck_dir, "media")
         os.makedirs(self._deck_dir, exist_ok=True)
         os.makedirs(self._deck_media_dir, exist_ok=True)
-
-    def _extract_frames_for_each_scene_of_subtitles(self):
-        frame_extractor = SubtitleFrameExtractor(self._video)
-        self._subtitles = frame_extractor\
-            .get_subtitles_with_one_frame_representing_each_subtitle(
-                self._subtitles
-            )
-
-    def _extract_audio_for_each_scene_of_subtitles(self):
-        audio_cutter = SubtitleAudioCutter(self._video)
-        self._subtitles = audio_cutter\
-            .get_subtitles_with_one_audio_representing_the_subtitle_scene(
-                self._subtitles
-            )
 
     def _create_anki_deck(self):
         AnkiDeckGenerator(
