@@ -1,9 +1,9 @@
 from typing import List
 
 from mediatoanki.extractors.ExtractorContract import ExtractorContract
-from mediatoanki.model.file.Audio import Audio
-from mediatoanki.model.file.Subtitle import Subtitle
-from mediatoanki.model.file.Video import Video
+from mediatoanki.model.entities.Audio import Audio
+from mediatoanki.model.entities.Subtitle import Subtitle
+from mediatoanki.model.entities.Video import Video
 
 
 class AudiosExtractor(ExtractorContract):

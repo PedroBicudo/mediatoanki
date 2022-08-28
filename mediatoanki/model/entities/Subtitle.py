@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
-from mediatoanki.model.file.Audio import Audio
-from mediatoanki.model.file.Frame import Frame
+from mediatoanki.model.entities.Audio import Audio
+from mediatoanki.model.entities.Frame import Frame
 from mediatoanki.utils.TimeUtils import TimeUtils
 
 

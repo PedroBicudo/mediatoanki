@@ -6,7 +6,7 @@ from mediatoanki.extractors.audio.AudiosExtractor import AudiosExtractor
 
 class AudiosExtractorTestCase(unittest.TestCase):
 
-    @mock.patch("mediatoanki.model.file.Video", autospec=True)
+    @mock.patch("mediatoanki.model.entities.Video", autospec=True)
     def test_empty_subtitles_throw_ValueError_exception(self, video):
         with self.assertRaises(
                 ValueError,

@@ -1,7 +1,7 @@
 import unittest
 from datetime import timedelta
 
-from mediatoanki.model.file.Subtitle import Subtitle
+from mediatoanki.model.entities.Subtitle import Subtitle
 from mediatoanki.utils.CopyUtils import copy_subtitle, deep_copy_of_subs
 
 
