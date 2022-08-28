@@ -5,7 +5,7 @@ import pysubs2
 from pysubs2 import Pysubs2Error, SSAEvent
 
 from mediatoanki.model.exceptions.ParseError import ParseError
-from mediatoanki.model.Subtitle import Subtitle
+from mediatoanki.model.file.Subtitle import Subtitle
 from mediatoanki.parsers.SubtitleParserAdapter import SubtitleParserAdapter
 from mediatoanki.utils.FileUtils import FileUtils
 

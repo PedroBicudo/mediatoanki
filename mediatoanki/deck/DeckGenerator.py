@@ -6,7 +6,7 @@ from genanki import Deck, Note
 from mediatoanki.deck.flashcard.FlashCardTemplate import FlashCardTemplate
 from mediatoanki.model.anki.FlashCardFieldsContent import \
     FlashCardFieldsContent
-from mediatoanki.model.Subtitle import Subtitle
+from mediatoanki.model.file.Subtitle import Subtitle
 from mediatoanki.utils.FileUtils import FileUtils
 
 

@@ -1,6 +1,6 @@
 from typing import List
 
-from mediatoanki.model.Subtitle import Subtitle
+from mediatoanki.model.file.Subtitle import Subtitle
 
 
 def deep_copy_of_subs(subtitles: List[Subtitle]) -> List[Subtitle]:
