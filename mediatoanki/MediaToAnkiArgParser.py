@@ -7,8 +7,8 @@ from mediatoanki.extractors.audio.AudiosExtractor import AudiosExtractor
 from mediatoanki.extractors.frame.FramesExtractor import FramesExtractor
 from mediatoanki.model.anki.FlashCardFieldsContent import \
     FlashCardFieldsContent
+from mediatoanki.model.file.Subtitle import Subtitle
 from mediatoanki.model.file.Video import Video
-from mediatoanki.model.Subtitle import Subtitle
 from mediatoanki.utils.FileUtils import FileUtils
 from mediatoanki.utils.SubtitleParserUtils import SubtitleParserUtils
 

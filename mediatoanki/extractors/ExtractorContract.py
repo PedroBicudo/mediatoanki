@@ -1,8 +1,8 @@
 import abc
 from typing import List
 
+from mediatoanki.model.file.Subtitle import Subtitle
 from mediatoanki.model.file.Video import Video
-from mediatoanki.model.Subtitle import Subtitle
 
 
 class ExtractorContract(metaclass=abc.ABCMeta):

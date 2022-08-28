@@ -1,7 +1,7 @@
 import abc
 from typing import List
 
-from mediatoanki.model.Subtitle import Subtitle
+from mediatoanki.model.file.Subtitle import Subtitle
 
 
 class SubtitleParserAdapter(metaclass=abc.ABCMeta):
