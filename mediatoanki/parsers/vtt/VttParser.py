@@ -39,8 +39,8 @@ class VttParser(SubtitleParserAdapter):
         subtitles = []
         for caption in captions:
             subtitle = Subtitle(
-                time_start=timedelta(milliseconds=caption.start),
-                time_end=timedelta(milliseconds=caption.end)
+                start=timedelta(milliseconds=caption.start),
+                end=timedelta(milliseconds=caption.end)
             )
             subtitle.text = "".join(caption.text.split("\n"))
             subtitles.append(subtitle)

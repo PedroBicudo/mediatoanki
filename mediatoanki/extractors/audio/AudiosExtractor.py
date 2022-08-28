@@ -20,12 +20,12 @@ class AudiosExtractor(ExtractorContract):
 
         for subtitle in subtitles:
             print(
-                f"Extracting audio from scene {subtitle.subtitle_id}...",
+                f"Extracting audio from scene {subtitle.id}...",
                 end=""
             )
             audio = video.video.audio.subclip(
-                subtitle.time_start.total_seconds(),
-                subtitle.time_end.total_seconds()
+                subtitle.start.total_seconds(),
+                subtitle.end.total_seconds()
             )
             subtitle.audio = Audio(audio)
             print("Done")

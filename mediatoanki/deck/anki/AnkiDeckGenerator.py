@@ -34,7 +34,7 @@ class AnkiDeckGenerator(DeckGenerator):
         notes = []
         for subtitle in subtitles:
             fields = fields_content(
-                subtitle.subtitle_id, subtitle.text
+                subtitle.id, subtitle.text
             )
             note = Note(
                 model=template.model,
