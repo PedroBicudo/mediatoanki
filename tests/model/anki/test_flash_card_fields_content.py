@@ -8,7 +8,7 @@ class FlashCardFieldsContentTestCase(unittest.TestCase):
 
     def test_html_content_is_equal_to_expected(self):
         # Given
-        content = FlashCardFieldsContent(1, "text")
+        content = FlashCardFieldsContent("1", "text")
 
         # When
         html = content.html
@@ -28,7 +28,7 @@ class FlashCardFieldsContentTestCase(unittest.TestCase):
 
     def test_html_content_is_equal_when_attribute_is_modified(self):
         # Given
-        content = FlashCardFieldsContent(1, "text")
+        content = FlashCardFieldsContent("1", "text")
 
         # When
         content.subtitle_id = 2

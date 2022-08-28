@@ -19,8 +19,8 @@ class FramesExtractor(ExtractorContract):
             )
 
         for pos, sub in enumerate(subtitles):
-            print(f"Extracting frame from scene {sub.subtitle_id}...", end="")
-            middle = ((sub.time_start + sub.time_end) // 2)
+            print(f"Extracting frame from scene {sub.id}...", end="")
+            middle = ((sub.start + sub.end) // 2)
             middle_sec_from_subs = middle.total_seconds()
             subtitles[pos].frame = Frame(
                 video,

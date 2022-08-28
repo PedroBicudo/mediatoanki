@@ -10,8 +10,8 @@ class CopyUtilsTestCase(unittest.TestCase):
     @staticmethod
     def get_subtitle_instance():
         return Subtitle(
-                timedelta(1, 2, 3),
-                timedelta(1, 2, 4)
+                start=timedelta(1, 2, 3),
+                end=timedelta(1, 2, 4)
             )
 
     def test_deep_copy_of_subs(self):
@@ -43,14 +43,14 @@ class CopyUtilsTestCase(unittest.TestCase):
             copy: Subtitle
     ):
         self.assertEqual(
-            dummy.time_start,
-            copy.time_start,
-            msg="time_start deve ser igual."
+            dummy.start,
+            copy.start,
+            msg="start deve ser igual."
         )
         self.assertEqual(
-            dummy.time_end,
-            copy.time_end,
-            msg="time_end deve ser igual."
+            dummy.end,
+            copy.end,
+            msg="end deve ser igual."
         )
         self.assertEqual(
             dummy.text,

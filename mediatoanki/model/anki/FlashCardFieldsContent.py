@@ -3,7 +3,7 @@ from typing import List
 
 class FlashCardFieldsContent:
 
-    def __init__(self, subtitle_id: int, subtitle_text: str):
+    def __init__(self, subtitle_id: str, subtitle_text: str):
         self.subtitle_id = subtitle_id
         self.subtitle_text = subtitle_text
 

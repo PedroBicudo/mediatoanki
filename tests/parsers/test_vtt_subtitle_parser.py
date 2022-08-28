@@ -48,19 +48,19 @@ class SubtitleParserVttTestCase(unittest.TestCase):
         subtitle = self.vtt_parser.convert_caption_to_subtitles([caption])[0]
         self.assertEqual(
             timedelta(milliseconds=caption.start).total_seconds(),
-            subtitle.time_start.total_seconds(),
+            subtitle.start.total_seconds(),
             msg=(
                 "Check if caption.start_in_seconds is equal "
-                "to subtitle.time_start.total_seconds()"
+                "to subtitle.start.total_seconds()"
             )
         )
 
         self.assertEqual(
             timedelta(milliseconds=caption.end).total_seconds(),
-            subtitle.time_end.total_seconds(),
+            subtitle.end.total_seconds(),
             msg=(
                 "Check if caption.end_in_seconds is equal "
-                "to subtitle.time_end.total_seconds()"
+                "to subtitle.end.total_seconds()"
             )
         )
 

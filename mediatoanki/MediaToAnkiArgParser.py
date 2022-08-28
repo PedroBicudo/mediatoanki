@@ -66,19 +66,19 @@ class MediaToAnkiArgParser:
 
     def _write_audio_and_frames_into_media_dir(self):
         for subtitle in self._subtitles:
-            print(f"[SCENE ID] {subtitle.subtitle_id}")
+            print(f"[SCENE ID] {subtitle.id}")
             self._write_frame_from_subtitle_into_media_dir(subtitle)
             self._write_audio_from_subtitle_into_media_dir(subtitle)
 
     def _write_frame_from_subtitle_into_media_dir(self, subtitle: Subtitle):
         subtitle.frame.write_at(
-            f"{subtitle.subtitle_id}",
+            f"{subtitle.id}",
             self._deck_media_dir
         )
 
     def _write_audio_from_subtitle_into_media_dir(self, subtitle: Subtitle):
         subtitle.audio.write_at(
-            f"{subtitle.subtitle_id}",
+            f"{subtitle.id}",
             self._deck_media_dir
         )
 

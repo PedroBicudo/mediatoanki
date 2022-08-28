@@ -23,7 +23,7 @@ class AnkiDeckGeneratorCase(unittest.TestCase):
         under_test: DeckGenerator = AnkiDeckGenerator(
             "foo",
             FlashCardTemplate(),
-            FlashCardFieldsContent(1, "foo").html,
+            FlashCardFieldsContent("1", "foo").html,
             [],
             "foo"
         )
@@ -40,12 +40,12 @@ class AnkiDeckGeneratorCase(unittest.TestCase):
         under_test: DeckGenerator = AnkiDeckGenerator(
             "foo",
             FlashCardTemplate(),
-            FlashCardFieldsContent(1, "foo").html,
+            FlashCardFieldsContent("1", "foo").html,
             [],
             "foo"
         )
         template = FlashCardTemplate()
-        subtitle = Subtitle(time_start=timedelta(0), time_end=timedelta(1))
+        subtitle = Subtitle(start=timedelta(0), end=timedelta(1))
         subtitle.text = "foo"
 
         notes = under_test.create_notes(
@@ -62,12 +62,12 @@ class AnkiDeckGeneratorCase(unittest.TestCase):
         under_test: DeckGenerator = AnkiDeckGenerator(
             "foo",
             FlashCardTemplate(),
-            FlashCardFieldsContent(1, "foo").html,
+            FlashCardFieldsContent("1", "foo").html,
             [],
             "foo"
         )
         template = FlashCardTemplate()
-        subtitle = Subtitle(time_start=timedelta(0), time_end=timedelta(1))
+        subtitle = Subtitle(start=timedelta(0), end=timedelta(1))
         subtitle.text = "foo"
 
         notes = under_test.create_notes(
@@ -77,7 +77,7 @@ class AnkiDeckGeneratorCase(unittest.TestCase):
         expected = Note(
             model=template,
             fields=FlashCardFieldsContent(
-                subtitle.subtitle_id, subtitle.text
+                subtitle.id, subtitle.text
             ).html
         )
 
@@ -91,12 +91,12 @@ class AnkiDeckGeneratorCase(unittest.TestCase):
         under_test: DeckGenerator = AnkiDeckGenerator(
             "foo",
             FlashCardTemplate(),
-            FlashCardFieldsContent(1, "foo").html,
+            FlashCardFieldsContent("1", "foo").html,
             [],
             "foo"
         )
         template = FlashCardTemplate()
-        subtitle = Subtitle(time_start=timedelta(0), time_end=timedelta(1))
+        subtitle = Subtitle(start=timedelta(0), end=timedelta(1))
         subtitle.text = "foo"
 
         notes = under_test.create_notes(
@@ -106,7 +106,7 @@ class AnkiDeckGeneratorCase(unittest.TestCase):
         expected = Note(
             model=template.model,
             fields=FlashCardFieldsContent(
-                subtitle.subtitle_id, subtitle.text
+                subtitle.id, subtitle.text
             ).html
         )
 
@@ -120,18 +120,18 @@ class AnkiDeckGeneratorCase(unittest.TestCase):
         under_test: DeckGenerator = AnkiDeckGenerator(
             "foo",
             FlashCardTemplate(),
-            FlashCardFieldsContent(1, "foo").html,
+            FlashCardFieldsContent("1", "foo").html,
             [],
             "foo"
         )
         template = FlashCardTemplate()
-        subtitle = Subtitle(time_start=timedelta(0), time_end=timedelta(1))
+        subtitle = Subtitle(start=timedelta(0), end=timedelta(1))
         subtitle.text = "foo"
         deck = under_test.create_deck("foo")
         notes = [Note(
             model=template,
             fields=FlashCardFieldsContent(
-                subtitle.subtitle_id, subtitle.text
+                subtitle.id, subtitle.text
             ).html
         )]
 
@@ -146,18 +146,18 @@ class AnkiDeckGeneratorCase(unittest.TestCase):
         under_test: DeckGenerator = AnkiDeckGenerator(
             "foo",
             FlashCardTemplate(),
-            FlashCardFieldsContent(1, "foo").html,
+            FlashCardFieldsContent("1", "foo").html,
             [],
             "foo"
         )
         template = FlashCardTemplate()
-        subtitle = Subtitle(time_start=timedelta(0), time_end=timedelta(1))
+        subtitle = Subtitle(start=timedelta(0), end=timedelta(1))
         subtitle.text = "foo"
         deck = under_test.create_deck("foo")
         notes = [Note(
             model=template,
             fields=FlashCardFieldsContent(
-                subtitle.subtitle_id, subtitle.text
+                subtitle.id, subtitle.text
             ).html
         )]
 
