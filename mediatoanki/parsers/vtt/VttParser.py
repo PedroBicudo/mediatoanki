@@ -4,8 +4,8 @@ from typing import List
 import pysubs2
 from pysubs2 import Pysubs2Error, SSAEvent
 
+from mediatoanki.model.entities.Subtitle import Subtitle
 from mediatoanki.model.exceptions.ParseError import ParseError
-from mediatoanki.model.file.Subtitle import Subtitle
 from mediatoanki.parsers.SubtitleParserAdapter import SubtitleParserAdapter
 from mediatoanki.utils.FileUtils import FileUtils
 
